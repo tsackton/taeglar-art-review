@@ -1,29 +1,23 @@
 # Taelgar art review
 
-This repository holds the shared decisions for the Vault restyle gallery. Reviewers use their own copy of the illustrated catalog. On macOS, double-click `Open Art Review.command` inside that copy’s `vault-restyle` folder. The `gallery` folder here contains updates for the review interface.
+Open the illustrated catalog’s `vault-restyle` folder and double-click **Open Art Review.command** on macOS or **Open Art Review.cmd** on Windows. The gallery opens in your browser. Keep the launcher window open while reviewing. You can also run `python3 art_review.py` from that folder.
+
+The launcher needs Python 3.9 or newer. To sync, install [GitHub CLI](https://cli.github.com/) and sign in once with `gh auth login`. Each collaborator uses their own account and needs write access to publish decisions. Choices, reviewer names, comments and edit instructions are visible in this public repository.
 
 ## Review an illustration
 
-1. Enter the name you want collaborators to see. Choose an original or a restyle. Use **Use with edits** to record a change you want made to the chosen image.
-2. **Request review** puts the illustration in the collaboration queue. Add a review comment with the question or change you want someone to check. Image notes can also be posted independently.
-3. A collaborator clicks **Sync**, filters **Review** to **Needs review**, and can filter further by requester. Open the illustration, inspect the selection in the lightbox, then approve or reject it with a comment. Sync again to share the response.
+1. Enter your reviewer name and choose an original or a restyle. **Use with edits** lets you select an image and describe what needs fixing.
+2. Use **Request review** to ask a collaborator to check your decision. Include your question in the review comment. You can also add an image note at any time.
+3. To see a collaborator’s requests, click **Sync** and filter **Review** to **Needs review**. You can narrow the list by requester. Open an image in the lightbox, approve or reject the selection with a comment, and click **Sync** to share your response.
 
-## Connect to GitHub
+## Share and back up decisions
 
-On macOS, double-click **Open Art Review.command**. The launcher opens the existing gallery in your default browser and uses your active GitHub CLI account. Keep its Terminal window open while you review. Click **Sync** to pull and push, or select **Connection → Pull only**. If your browser asks for local network access, allow it for the launcher connection. Close the Terminal window or press Control-C when finished.
+The browser saves your work as you go. **Sync** retrieves other reviewers’ changes and publishes yours. **Pull only** retrieves shared changes without publishing your local work. Each change has its own file under `reviews/<image-id>/`. Two people can add notes independently, even on the same image. If two reviewers make different selections, the gallery keeps both for resolution.
 
-The launcher needs GitHub CLI (`gh`) and Node.js 18 or later. If you need to sign in, the launcher starts `gh auth login`. Use the browser and profile where you normally review to retain your local decisions. Your account needs write access to this repository to publish changes. The public log includes choices, comments, reviewer names and edit instructions.
+**Export decisions** downloads a backup of the choices and review history in your browser. **Import decisions** merges a backup into the current browser and skips entries it already has. Click **Sync** when you’re ready to share imported entries.
 
-You can also open `index.html` directly and use **Pull only**, or enter a personal token for the tab to push.
+**Moving from the old HTML gallery?** Open the launcher and click **Pull only** for previously synced work. For choices you haven’t synced, open the old `index.html` directly in the browser and profile you used before, click **Export decisions**, then **Import decisions** in the new gallery.
 
-For the repository owner, use a fine-grained token restricted to `tsackton/taeglar-art-review` with **Contents: Read and write**. An invited outside collaborator using a classic token for this public repository needs the `public_repo` scope. [GitHub’s guide to personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+## Update another copy of the catalog
 
-## How sync works
-
-Each change gets an immutable entry under `reviews/<image-id>/`. One sync downloads missing changes and sends local changes together in a Git commit. Two people can add notes to the same image independently. If they select competing versions, both proposals remain available for resolution in the gallery. Review responses refer to the proposal being reviewed.
-
-The gallery saves changes in the current browser as you work. **Export decisions** downloads a portable backup. **Import decisions** restores a backup locally, and **Sync** shares the imported history. Reviewers who already used the gallery should open the updated page in the same browser at the same file location to carry their choices forward.
-
-## Update another copy of the gallery
-
-Copy the files inside `gallery/` into the existing `vault-restyle/` folder, then reload its `index.html`. The original catalog, inventory and generated artwork are supplied separately.
+Copy the files inside this repository’s `gallery/` folder into the illustrated catalog’s `vault-restyle/` folder, then reopen the launcher. Keep the catalog’s `originals/` and `thumbnails/` folders alongside `vault-restyle/`. The catalog inventory and artwork are distributed separately.

@@ -47,9 +47,3 @@ body:has(#viewer[open]){overflow:hidden}
 .top,.actions{flex-wrap:wrap}
 .reviewer-name{display:flex;align-items:center;gap:6px;color:inherit;margin:0}
 .reviewer-name input{width:9em;margin:0}
-#githubDialog{width:min(440px,94vw);padding:24px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px}
-#githubDialog::backdrop{background:#15241f99}
-#githubDialog h2{font-size:28px;margin:0}
-#githubDialog a{color:var(--forest)}
-.connection-help{font-size:13px;color:var(--muted)}
-.sync-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-top:18px}

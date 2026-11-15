@@ -15,22 +15,6 @@
   const log = new ReviewLog(items,outputs,localStorage);
   const pageSize = 20;
   const index = new Map(items.map(item => [item.id, item]));
-  let token = "";
-  const cliSessionKey = "taelgar-vault-restyle:cli-session";
-  function cliSession() {
-    if (location.protocol !== "file:") return null;
-    const fragment = location.hash.slice(1);
-    const supplied = fragment.startsWith("gh-port=");
-    const value = supplied ? fragment : sessionStorage.getItem(cliSessionKey) || "";
-    const match = /^gh-port=(\d{1,5})&gh-key=([0-9a-f]{64})$/.exec(value);
-    if (!match || Number(match[1]) < 1 || Number(match[1]) > 65535) return null;
-    if (supplied) {
-      sessionStorage.setItem(cliSessionKey,value);
-      history.replaceState(null,"",location.href.split("#")[0]);
-    }
-    return {url:"http://127.0.0.1:" + match[1] + "/sync",key:match[2]};
-  }
-  let cli = cliSession();
   let active = decodeURIComponent(location.hash.slice(1));
   let page = 0;
   let matches = [];
@@ -477,97 +461,47 @@
   byId("import").onclick=()=>byId("file").click();
   byId("file").onchange=e=>importDecisions(e.target.files[0]);
   window.addEventListener("hashchange",() => {
-    if (location.hash.startsWith("#gh-port=")) {
-      cli = cliSession();
-      byId("connection").hidden = !(cli || token);
-      if (cli) notice("Connected through GitHub CLI. Sync shares your review changes.");
-      return;
-    }
     const item = index.get(decodeURIComponent(location.hash.slice(1)));
     if (matches.includes(item)) select(item);
   });
   let syncInProgress = false;
-  const connectDialog = byId("githubDialog");
-  function connectionDialog() {
-    byId("githubToken").value = "";
-    byId("disconnect").hidden = !(cli || token);
-    byId("tokenField").hidden = Boolean(cli);
-    byId("authHelp").hidden = Boolean(cli);
-    byId("cliHelp").textContent = cli ? "Connected through GitHub CLI. Keep the launcher window open while you review." : "To use your GitHub CLI login, double-click Open Art Review.command in this gallery folder.";
-    byId("githubToken").placeholder = token ? "Connected for this tab" : "Token with repository write access";
-    connectDialog.showModal();
-  }
-  async function syncThroughLauncher(session,pullOnly) {
-    let pulled = 0;
-    for (let attempt = 0; attempt < 8; attempt++) {
-      let response;
-      try {
-        response = await fetch(session.url,{
-          method:"POST",headers:{"Content-Type":"application/json","X-Review-Session":session.key},
-          body:JSON.stringify({events:log.events(),pullOnly}),cache:"no-store",credentials:"omit",redirect:"error"
-        });
-      } catch {
-        throw Error("Could not reach the launcher. Reopen Open Art Review.command and allow local network access if your browser asks.");
-      }
-      const result = await response.json();
-      if (!response.ok) throw Error(result.error || "The launcher could not sync.");
-      if (!result.events.length) return {pulled,pushed:result.pushed};
-      pulled += log.merge(result.events);
-      if (pullOnly) return {pulled,pushed:0};
+  async function syncReviews(pullOnly) {
+    if (location.protocol === "file:") {
+      notice("Open Art Review.command on Mac or Open Art Review.cmd on Windows to sync. To move unsynced choices from this page, export them here and import them in the launcher.");
+      return;
     }
-    throw Error("Other reviewers are still updating the log. Your changes are saved. Click Sync again.");
-  }
-  async function sync(pullOnly = false) {
     if (syncInProgress) return;
     syncInProgress = true;
-    byId("sync").disabled = true;
-    byId("sync").textContent = "Syncing…";
-    byId("connection").disabled = true;
+    byId("sync").disabled = byId("pull").disabled = true;
+    notice("Checking the shared GitHub review log…");
+    let pulled = 0;
     try {
-      log.refresh();
-      notice(cli ? "Syncing through GitHub CLI…" : "Checking GitHub…");
-      const result = cli ? await syncThroughLauncher(cli,pullOnly) : await window.syncArtReviews({
-        token,events:log.events(),pullOnly,receive:incoming=>log.merge(incoming),onProgress:notice
-      });
-      notice(pullOnly ? "Pulled " + result.pulled + " shared entries. Local changes are saved in this browser."
-        : "Sync complete. Pulled " + result.pulled + " and pushed " + result.pushed + " review entries.");
+      for (let attempt = 0; attempt < 8; attempt++) {
+        log.refresh();
+        const response = await fetch("/sync",{
+          method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({events:log.events(),pullOnly})
+        });
+        const result = await response.json();
+        if (!response.ok) throw Error(result.error || "Could not sync.");
+        pulled += log.merge(result.events);
+        if (pullOnly || !result.events.length) {
+          notice(pullOnly ? "Pulled " + pulled + " review entries."
+            : "Sync complete. Pulled " + pulled + " and pushed " + result.pushed + " review entries.");
+          return;
+        }
+      }
+      throw Error("Other reviewers are still updating the log. Click Sync again.");
     } catch (error) {
-      if (error.status === 401) token = "";
-      notice("Sync stopped. " + error.message);
+      notice("Sync stopped. " + (error instanceof TypeError ? "Reopen the Python launcher and try again." : error.message));
     } finally {
       syncInProgress = false;
-      byId("sync").disabled = false;
-      byId("sync").textContent = "Sync";
-      byId("connection").disabled = false;
-      byId("connection").hidden = !(cli || token);
-      log.refresh();
+      byId("sync").disabled = byId("pull").disabled = false;
       filter();
     }
   }
-  byId("sync").onclick = () => cli || token ? sync() : connectionDialog();
-  byId("connection").onclick = connectionDialog;
-  byId("cancelSync").onclick = () => connectDialog.close();
-  byId("disconnect").onclick = () => {
-    token = "";
-    cli = null;
-    sessionStorage.removeItem(cliSessionKey);
-    byId("connection").hidden = true;
-    connectDialog.close();
-    notice("Disconnected from GitHub.");
-  };
-  byId("pull").onclick = () => { connectDialog.close(); sync(true); };
-  byId("githubForm").onsubmit = event => {
-    event.preventDefault();
-    if (cli) { connectDialog.close(); sync(); return; }
-    const input = byId("githubToken");
-    const supplied = input.value.trim();
-    if (!token && !supplied) { input.setCustomValidity("Enter a GitHub token to push your changes."); input.reportValidity(); return; }
-    token = supplied || token;
-    connectDialog.close();
-    sync();
-  };
-  byId("githubToken").oninput = e => e.target.setCustomValidity("");
-  connectDialog.onclose = () => { byId("githubToken").value=""; byId("githubToken").setCustomValidity(""); };
+  byId("sync").onclick = () => syncReviews(false);
+  byId("pull").onclick = () => syncReviews(true);
   byId("reviewerName").value = localStorage.getItem(reviewerKey) || "";
   byId("reviewerName").onchange = e => localStorage.setItem(reviewerKey,e.target.value.trim());
   let storageTimer;
@@ -578,9 +512,5 @@
       storageTimer = setTimeout(()=>{log.refresh();filter();},100);
     }
   });
-  if (cli) {
-    byId("connection").hidden = false;
-    notice("Connected through GitHub CLI. Sync publishes your review changes to the public review log.");
-  }
   initFilters(); filter();
 })();
