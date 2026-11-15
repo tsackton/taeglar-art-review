@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T16:31:53.682Z",
+  "author": "tim",
+  "choice": "original",
+  "editNote": "redo to make a little more watercolor and remove the signature at the bottom left",
+  "id": "861725b0-d2c2-4e23-b8b0-33f95643e99c",
+  "itemId": "catalog-2453",
+  "mode": "edits",
+  "parents": [
+    "933e1d4d-c253-4fc6-b699-b2d9e2da0c73"
+  ],
+  "sourceSha256": "c2b11da1b02336cf00a297d212d06f3cd8f994dcd93db0b5977166de943276e4",
+  "type": "choice",
+  "variantSha256": null
+}

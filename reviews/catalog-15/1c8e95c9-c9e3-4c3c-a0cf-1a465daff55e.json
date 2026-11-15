@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T16:25:58.881Z",
+  "author": "tim",
+  "choice": "faithful",
+  "editNote": "fix the blur in the background the full image should be sharp",
+  "id": "1c8e95c9-c9e3-4c3c-a0cf-1a465daff55e",
+  "itemId": "catalog-15",
+  "mode": "edits",
+  "parents": [
+    "cb8821fb-4478-4177-82ad-478cbe19418e"
+  ],
+  "sourceSha256": "79555a3613f9c80939c496977e0490ddc007404ca45001f2fb59f6ea675fc607",
+  "type": "choice",
+  "variantSha256": "585c0825245c7397a20b55bcd2261a87284b171aaa30f6d3b5b1d5ddcafe3f4a"
+}
