@@ -64,8 +64,13 @@
     return heads(events.filter(e => e.type === "choice"));
   }
 
-  function summarizeReviews(history,proposalId) {
-    const events = history.filter(e => e.type === "review" && e.proposalId === proposalId);
+  function decisionKey(proposal) {
+    const instructions = proposal.mode === "edits" ? proposal.editNote.trim() : "";
+    return JSON.stringify([proposal.choice,proposal.variantSha256,proposal.mode,instructions]);
+  }
+
+  function summarizeReviews(history,proposalIds) {
+    const events = history.filter(e => e.type === "review" && proposalIds.has(e.proposalId));
     const requests = events.filter(e => e.status === "requested");
     const byId = new Map(events.map(e => [e.id,e]));
     const superseded = new Set();
@@ -149,14 +154,24 @@
         this.variant(id,e.choice)?.sha256 !== e.variantSha256).map(e => e.id);
       const valid = !staleProposalIds.includes(p?.id);
       const proposalId = p?.id || null;
-      const reviews = summarizeReviews(history,proposalId);
+      const selectedKey = p && decisionKey(p);
+      const agreeingIds = new Set([proposalId]);
+      const alternatives = new Map();
+      // History keeps each reviewer's choice. Show one option per distinct decision.
+      for (const proposal of proposals) {
+        const key = decisionKey(proposal);
+        if (key === selectedKey) agreeingIds.add(proposal.id);
+        else alternatives.set(key,proposal);
+      }
+      const reviews = summarizeReviews(history,agreeingIds);
       const latest = valid && reviews.latest;
       const state = {choice:valid ? p?.choice || null : null,mode:valid ? p?.mode || "use" : "use",
         editNote:valid ? p?.editNote || "" : "",proposalId,proposalAuthor:p?.author || "",
         updatedAt:p?.at || null,sourceSha256:item.sha256,variantSha256:valid ? p?.variantSha256 || null : null,
         reviewStatus:latest?.status || "none",reviewComment:latest?.text || "",
         requestId:valid ? reviews.request?.id || null : null,requestedBy:valid ? reviews.request?.author || "" : "",
-        comments:history.filter(e => e.type === "comment"),history,conflicts:proposals.slice(0,-1),
+        comments:history.filter(e => e.type === "comment"),history,conflicts:[...alternatives.values()],
+        reviewParentIds:[...reviews.liveRequests,...reviews.verdicts].map(e => e.id),
         reviewConflicts:valid ? [...reviews.liveRequests.slice(0,-1),...reviews.verdicts.slice(0,-1).filter(e => e.status !== latest.status)] : [],
         staleChoice:!valid,staleProposalIds};
       this.cache.set(id,state);
@@ -188,12 +203,11 @@
       if (contains(expected,"requestId")) requireValue(expected.requestId === state.requestId,
         "The review request changed. Check it before responding.");
       requireValue(!state.staleChoice,"Select a current version before submitting a review.");
-      const reviews = summarizeReviews(state.history,state.proposalId);
-      const request = status === "requested";
-      requireValue(request || reviews.request,"Request a review before approving or rejecting it.");
-      const parents = [...reviews.liveRequests,...reviews.verdicts];
-      return this.append(id,"review",author,{status,text,proposalId:state.proposalId,
-        requestId:request ? null : reviews.request.id,parents:parents.map(e => e.id)});
+      const newRequest = status === "requested";
+      const request = this.records.get(state.requestId);
+      requireValue(newRequest || request,"Request a review before approving or rejecting it.");
+      return this.append(id,"review",author,{status,text,proposalId:newRequest ? state.proposalId : request.proposalId,
+        requestId:newRequest ? null : request.id,parents:state.reviewParentIds});
     }
     comment(id,text,author = "",context = {}) {
       let {requestId = null,proposalId = null} = context;

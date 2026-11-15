@@ -192,7 +192,7 @@
       reviewButtons.append(button("Post reply",b => {
         const text = reviewText.input.value.trim();
         if (!text) { reviewText.input.focus(); return; }
-        submit({type:"comment",text,requestId:state.requestId,proposalId:state.proposalId},[reviewText.input],b);
+        submit({type:"comment",text,requestId:state.requestId},[reviewText.input],b);
       }));
     }
     if (reviewButtons.childElementCount) review.append(reviewText.wrapper,reviewButtons);
