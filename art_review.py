@@ -1,4 +1,4 @@
-"""Run the review gallery with an independently located image source."""
+"""Open the Taelgar art review gallery."""
 import argparse
 import errno
 import json
@@ -7,10 +7,10 @@ import sys
 import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, unquote, urlsplit
+from urllib.parse import unquote, urlsplit
 from urllib.request import urlopen
 
-from review_sync import PROJECT, sync
+from review_sync import sync
 
 ROOT = Path(__file__).resolve().parent
 GALLERY = ROOT / "gallery"
@@ -28,11 +28,8 @@ def choose_source(argument):
         return Path(argument).expanduser().resolve()
     if SAVED_SOURCE.is_file():
         saved = Path(SAVED_SOURCE.read_text(encoding="utf-8").strip())
-        if saved.is_absolute() and (saved / "inventory.json").is_file():
+        if saved.is_absolute() and all((saved / name).is_file() for name in MANIFESTS):
             return saved.resolve()
-    sibling = ROOT.parent / "image-source"
-    if (sibling / "inventory.json").is_file():
-        return sibling.resolve()
     try:
         from tkinter import Tk, TclError, filedialog
     except ImportError:
@@ -58,24 +55,11 @@ def choose_source(argument):
     raise SystemExit("Start the gallery with python art_review.py followed by the path to your image source.")
 
 
-def project_id(source):
-    for name in sorted(MANIFESTS):
-        if not (source / name).is_file():
-            raise ValueError(f"Missing {name} in {source}. Choose the folder containing the image inventory.")
-    with (source / "inventory.json").open(encoding="utf-8") as inventory:
-        data = json.load(inventory)
-    identifier = data.get("projectId") if isinstance(data, dict) else None
-    if not isinstance(identifier, str) or not PROJECT.fullmatch(identifier):
-        raise ValueError(f"Set a valid projectId in {source / 'inventory.json'}.")
-    return identifier
-
-
 class GalleryHandler(SimpleHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
     def end_headers(self):
-        # A newly selected source can have different files with the same relative names.
         self.send_header("Cache-Control", "no-store")
         super().end_headers()
 
@@ -92,8 +76,7 @@ class GalleryHandler(SimpleHTTPRequestHandler):
         if self.headers.get("Host") != f"{HOST}:{PORT}":
             self.send_error(403)
             return
-        url = urlsplit(self.path)
-        path = unquote(url.path)
+        path = unquote(urlsplit(self.path).path)
         if path == "/app":
             self.json_response(200, self.server.identity)
             return
@@ -101,10 +84,6 @@ class GalleryHandler(SimpleHTTPRequestHandler):
         if len(parts) == 1 and parts[0] in STATIC:
             target = GALLERY / parts[0]
         elif parts[0] == "data":
-            project = parse_qs(url.query).get("project")
-            if project and project != [self.server.project_id]:
-                self.send_error(409, "Image source changed. Reload the gallery.")
-                return
             parts = parts[1:]
             manifest = len(parts) == 1 and parts[0] in MANIFESTS
             image = (len(parts) >= 2 and parts[0] in {"originals", "thumbnails", "variants"}
@@ -144,9 +123,7 @@ class GalleryHandler(SimpleHTTPRequestHandler):
             data = json.loads(self.rfile.read(length))
             if not isinstance(data, dict) or not isinstance(data.get("events"), list) or not isinstance(data.get("pullOnly"), bool):
                 raise ValueError("Invalid review sync request.")
-            if data.get("projectId") != self.server.project_id:
-                raise ValueError("The selected image source has changed. Reload the gallery before syncing.")
-            result = sync(data["events"], pull_only=data["pullOnly"], project_id=self.server.project_id)
+            result = sync(data["events"], pull_only=data["pullOnly"])
         except (ValueError, RuntimeError, OSError) as error:
             return self.json_response(400, {"error": str(error)})
         self.json_response(200, result)
@@ -165,11 +142,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", nargs="?", help="image source folder containing inventory.json and outputs.json")
     source = choose_source(parser.parse_args().source)
-    try:
-        identifier = project_id(source)
-    except (ValueError, OSError) as error:
-        sys.exit(str(error))
-    identity = {"app": "taelgar-art-review", "review": str(ROOT), "source": str(source), "projectId": identifier}
+    for manifest in MANIFESTS:
+        if not (source / manifest).is_file():
+            sys.exit(f"Missing {manifest}. Choose the downloaded image-source folder.")
+    identity = {"app": "taelgar-art-review", "review": str(ROOT), "source": str(source)}
     try:
         server = GalleryServer((HOST, PORT), GalleryHandler)
     except OSError as error:
@@ -186,7 +162,6 @@ def main():
         return
     with server:
         server.source = source
-        server.project_id = identifier
         server.identity = identity
         SAVED_SOURCE.write_text(str(source) + "\n", encoding="utf-8")
         print(f"Image source: {source}\nArt Review: {ORIGIN}/\nKeep this window open while reviewing.", flush=True)

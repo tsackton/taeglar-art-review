@@ -83,9 +83,9 @@
   }
 
   class ReviewLog {
-    constructor(projectId,items,outputs,storage = localStorage) {
+    constructor(items,outputs,storage = localStorage) {
       this.storage = storage;
-      this.storagePrefix = "art-review:" + projectId + ":events:";
+      this.storagePrefix = "art-review:taelgar-vault-restyle:events:";
       this.items = new Map(items.map(item => [item.id,item]));
       this.outputs = outputs;
       this.records = new Map();

@@ -11,9 +11,9 @@ async function startGallery() {
     }
   }
   const [inventory,outputs] = await Promise.all([readManifest("inventory.json"),readManifest("outputs.json")]);
-  const {projectId,items} = inventory || {};
-  if (typeof projectId !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(projectId) || !Array.isArray(items)) {
-    throw Error("inventory.json must include a projectId and an items list.");
+  const {items} = inventory || {};
+  if (!Array.isArray(items)) {
+    throw Error("inventory.json must include an items list.");
   }
   if (!outputs || Array.isArray(outputs) || typeof outputs !== "object") {
     throw Error("outputs.json must contain review sets keyed by image ID.");
@@ -25,8 +25,8 @@ async function startGallery() {
     scene: [["faithful","Faithful"],["light-correction","Light corrections"],["full-correction","Full corrections"]]
   };
   const statuses = {ready:"Reviewed", pending:"Awaiting review", missing:"Awaiting images"};
-  const reviewerKey = "art-review:" + projectId + ":reviewer";
-  const log = new ReviewLog(projectId,items,outputs);
+  const reviewerKey = "art-review:taelgar-vault-restyle:reviewer";
+  const log = new ReviewLog(items,outputs);
   const pageSize = 20;
   const index = new Map(items.map(item => [item.id, item]));
   let active = decodeURIComponent(location.hash.slice(1));
@@ -67,7 +67,7 @@ async function startGallery() {
         parts.some(part => !part || part === "." || part === ".." || part.includes("\\"))) {
       throw Error("Invalid image path in the image source: " + path);
     }
-    return "/data/" + parts.map(encodeURIComponent).join("/") + "?project=" + encodeURIComponent(projectId);
+    return "/data/" + parts.map(encodeURIComponent).join("/");
   }
   function makeImage(path, alt, lazy = false) {
     const img = node("img");
@@ -452,17 +452,16 @@ async function startGallery() {
         reviewComment:saved.reviewComment,requestedBy:saved.requestedBy,proposalAuthor:saved.proposalAuthor,
         sourceSha256:saved.sourceSha256,variantSha256:saved.variantSha256,updatedAt:saved.updatedAt,selectedPath:saved.conflicts.length ? null : v?.path || item.source});
     }
-    const data={project:projectId,schemaVersion:2,events:log.events(),exportedAt:new Date().toISOString(),inventoryCount:items.length,decisions:rows};
+    const data={schemaVersion:2,events:log.events(),exportedAt:new Date().toISOString(),inventoryCount:items.length,decisions:rows};
     const blob=new Blob([JSON.stringify(data,null,2) + "\n"],{type:"application/json"});
     const href=URL.createObjectURL(blob), a=node("a");
-    a.href=href; a.download=projectId + "-decisions-" + data.exportedAt.slice(0,10) + ".json";
+    a.href=href; a.download="taelgar-art-decisions-" + data.exportedAt.slice(0,10) + ".json";
     document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(href),30000);
   }
   async function importDecisions(file) {
     if (!file) return;
     try {
       const data = JSON.parse(await file.text());
-      if (data.project !== projectId) throw Error("This file belongs to another project.");
       if (data.schemaVersion !== 2 || !Array.isArray(data.events)) throw Error("Choose an exported art review file.");
       log.refresh();
       const count = log.merge(data.events);
@@ -490,7 +489,7 @@ async function startGallery() {
         log.refresh();
         const response = await fetch("/sync",{
           method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({projectId,events:log.events(),pullOnly})
+          body:JSON.stringify({events:log.events(),pullOnly})
         });
         const result = await response.json();
         if (!response.ok) throw Error(result.error || "Could not sync.");
