@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:49:59.899Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "increase the detail/realism slightly",
+  "id": "bcf64516-f615-4cd3-a254-3962cedb51f4",
+  "itemId": "catalog-1082",
+  "mode": "edits",
+  "parents": [
+    "85673e78-c7f8-4032-832a-2c7c857c7d86"
+  ],
+  "sourceSha256": "3be9179c995871d30ca42569e8ad35e1c03d51cd250f1293d729c74b1a9140a7",
+  "type": "choice",
+  "variantSha256": "d10ae0f7eb8dcabc81554964698d78580384f2e01a9f38cfd3073744ea9ae663"
+}

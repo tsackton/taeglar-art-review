@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:48:39.272Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "the earrings should be removed or fixed, currently the earrings are connected to the hair, not the ear on the right side.",
+  "id": "1e1d3cf3-0284-4eb2-a8b5-46249a8497a7",
+  "itemId": "catalog-2103",
+  "mode": "edits",
+  "parents": [
+    "4bc32276-5816-4290-b5b1-d75bd392e99a"
+  ],
+  "sourceSha256": "6b42dbd7fab5c9a433113fc852003c1744cfe076e092c5e46a0dde2c2f110929",
+  "type": "choice",
+  "variantSha256": "529a2d9496d13fa948d3dedbe041cf0971ab04b833c516fd2cc53a842a7a53e6"
+}

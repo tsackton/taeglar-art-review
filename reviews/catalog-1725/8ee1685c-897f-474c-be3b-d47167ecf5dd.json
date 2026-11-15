@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:53:09.258Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "remove the red dot on forehead",
+  "id": "8ee1685c-897f-474c-be3b-d47167ecf5dd",
+  "itemId": "catalog-1725",
+  "mode": "edits",
+  "parents": [
+    "35132629-57bf-428a-8a25-d6f90fd07acb"
+  ],
+  "sourceSha256": "bcd4dd6da90515a7062ad548eef2a44226aaa8c7f9e3747ba4f818224e355e3f",
+  "type": "choice",
+  "variantSha256": "c328e2dbd73013b1143449e4bd2c3ba7d7acdcb28d0e515cbb4df6f5b552b0f0"
+}

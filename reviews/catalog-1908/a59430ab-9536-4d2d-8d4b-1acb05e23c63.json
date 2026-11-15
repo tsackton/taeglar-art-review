@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:51:04.882Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "hands need to be fixed to be more correctly clasping each other and remove the tassle sticking through the hand.",
+  "id": "a59430ab-9536-4d2d-8d4b-1acb05e23c63",
+  "itemId": "catalog-1908",
+  "mode": "edits",
+  "parents": [
+    "c189dfb7-2a43-4200-8b44-d3d7e4f35bf0"
+  ],
+  "sourceSha256": "f52d6fdd760c5ee75f4fbf0b40882963d03cddfea76edf20cd366d1368852522",
+  "type": "choice",
+  "variantSha256": "2a8c74cefc01df4fd7ec83e9403eeb465b2c1102a1398fa38df2bd0008b5e49d"
+}

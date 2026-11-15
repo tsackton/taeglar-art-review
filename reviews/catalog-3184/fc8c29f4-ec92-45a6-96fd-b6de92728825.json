@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:51:31.661Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "zoom out about 20% to at least show full hair and a bit of shoulders.",
+  "id": "fc8c29f4-ec92-45a6-96fd-b6de92728825",
+  "itemId": "catalog-3184",
+  "mode": "edits",
+  "parents": [
+    "215aea65-d943-45b7-95f3-d6b0ce873a15"
+  ],
+  "sourceSha256": "9c797dbfc62a2dfa90e0c2e7c1eb0cb28a91d34e307aab0ba32d4a8f59097d8e",
+  "type": "choice",
+  "variantSha256": "0cb425e9e02c1375fe56a6c9c8c5a6bf692a9f61b69d2b5b0bde9cd4216481b5"
+}
