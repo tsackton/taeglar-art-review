@@ -36,8 +36,9 @@
  <form id="githubForm">
   <h2 id="githubTitle">Sync with GitHub</h2>
   <p>Reviewer names, choices, and comments you push are public in <a href="https://github.com/tsackton/taeglar-art-review" target="_blank" rel="noopener">tsackton/taeglar-art-review</a>.</p>
-  <label>GitHub token<input id="githubToken" type="password" autocomplete="off" spellcheck="false" placeholder="Token with repository write access"></label>
-  <p class="connection-help">Your token stays in this tab until you close it or disconnect. <a href="https://github.com/tsackton/taeglar-art-review#connect-to-github" target="_blank" rel="noopener">Connection instructions</a></p>
+  <p id="cliHelp" class="connection-help"></p>
+  <label id="tokenField">GitHub token<input id="githubToken" type="password" autocomplete="off" spellcheck="false" placeholder="Token with repository write access"></label>
+  <p class="connection-help" id="authHelp">Your token stays in this tab until you close it or disconnect. <a href="https://github.com/tsackton/taeglar-art-review#connect-to-github" target="_blank" rel="noopener">Connection instructions</a></p>
   <div class="sync-actions"><button type="button" id="cancelSync">Close</button><button type="button" id="disconnect" hidden>Disconnect</button><button type="button" id="pull">Pull only</button><button type="submit" class="primary">Pull &amp; push</button></div>
  </form>
 </dialog>

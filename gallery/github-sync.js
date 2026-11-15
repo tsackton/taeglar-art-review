@@ -26,7 +26,8 @@
     const bytes = new Uint8Array(header.length + body.length);
     bytes.set(header);
     bytes.set(body, header.length);
-    const hash = await crypto.subtle.digest("SHA-1", bytes);
+    const subtle = globalThis.crypto?.subtle || require("node:crypto").webcrypto.subtle;
+    const hash = await subtle.digest("SHA-1", bytes);
     return Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, "0")).join("");
   }
 
@@ -55,12 +56,12 @@
     return entries;
   }
 
-  async function readEvents(entries, token, head, request) {
+  async function readEvents(entries, authenticated, head, request) {
     const rows = [];
     for (let start = 0; start < entries.length; start += 40) {
       const batch = entries.slice(start, start + 40);
       let contents;
-      if (token && batch.length > 1) {
+      if (authenticated && batch.length > 1) {
         const fields = batch.map((entry, i) => "e" + i + ':object(oid:"' + verifySha(entry.sha) + '"){... on Blob{text}}');
         const query = '{repository(owner:"tsackton",name:"taeglar-art-review"){' + fields.join(" ") + '}}';
         const result = await request("/graphql", "POST", {query});
@@ -68,7 +69,7 @@
           throw Error("GitHub could not read these review entries. " + (result.errors?.[0]?.message || "Check repository access and sync again."));
         }
         contents = batch.map((_, i) => result.data.repository["e" + i]?.text);
-      } else if (token) {
+      } else if (authenticated) {
         const blob = await request("/git/blobs/" + verifySha(batch[0].sha));
         contents = [new TextDecoder("utf-8", {fatal:true}).decode(Uint8Array.from(atob(blob.content), char => char.charCodeAt(0)))];
       } else {
@@ -96,8 +97,10 @@
     return rows;
   }
 
-  window.syncArtReviews = async function ({token = "", events, receive, pullOnly = false, onProgress = () => {}}) {
+  async function syncArtReviews({token = "", authenticatedRequest, events, receive, pullOnly = false, onProgress = () => {}}) {
+    const authenticated = Boolean(token || authenticatedRequest);
     async function request(path, method = "GET", data) {
+      if (authenticatedRequest) return authenticatedRequest(path, method, data);
       const headers = {Accept:"application/vnd.github+json"};
       if (token) headers.Authorization = "Bearer " + token;
       if (data) headers["Content-Type"] = "application/json";
@@ -148,7 +151,7 @@
       const missing = Array.from(remote.values()).filter(entry => known.get(entry.path)?.sha !== entry.sha);
       if (missing.length) {
         onProgress("Reading " + missing.length + " shared review entries…");
-        const incoming = await readEvents(missing, token, head, request);
+        const incoming = await readEvents(missing, authenticated, head, request);
         const fresh = [];
         for (const row of incoming) {
           const existing = known.get(row.path);
@@ -168,7 +171,7 @@
       }
       pendingAtStart ??= additions.length;
       if (!additions.length) return {pushed:pendingAtStart, pulled};
-      if (!token) throw Error("Shared changes were pulled. Enter a GitHub token with Contents read and write access to publish your local changes.");
+      if (!authenticated) throw Error("Shared changes were pulled. Enter a GitHub token with Contents read and write access to publish your local changes.");
 
       onProgress("Publishing " + additions.length + " review entries…");
       const createdTree = await request("/git/trees", "POST", {base_tree:tree, tree:additions});
@@ -186,5 +189,7 @@
       }
     }
     throw Error("The shared log changed repeatedly. Your changes are saved locally. Sync again.");
-  };
+  }
+  if (typeof module !== "undefined" && module.exports) module.exports = syncArtReviews;
+  else window.syncArtReviews = syncArtReviews;
 })();

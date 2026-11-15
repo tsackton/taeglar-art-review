@@ -1,6 +1,6 @@
 # Taelgar art review
 
-This repository holds the shared decisions for the Vault restyle gallery. Reviewers use their own copy of the illustrated catalog. Open `vault-restyle/index.html` in that copy. The `gallery` folder here contains updates for the review interface.
+This repository holds the shared decisions for the Vault restyle gallery. Reviewers use their own copy of the illustrated catalog. On macOS, double-click `Open Art Review.command` inside that copy’s `vault-restyle` folder. The `gallery` folder here contains updates for the review interface.
 
 ## Review an illustration
 
@@ -10,7 +10,11 @@ This repository holds the shared decisions for the Vault restyle gallery. Review
 
 ## Connect to GitHub
 
-Click **Sync** in the gallery. To push, enter your own GitHub token for an account with write access to this repository. The page keeps the token in memory for the open tab. **Pull only** can fetch the public log without credentials. Decisions, comments, reviewer names and edit instructions become public when pushed.
+On macOS, double-click **Open Art Review.command**. The launcher opens the existing gallery in your default browser and uses your active GitHub CLI account. Keep its Terminal window open while you review. Click **Sync** to pull and push, or select **Connection → Pull only**. If your browser asks for local network access, allow it for the launcher connection. Close the Terminal window or press Control-C when finished.
+
+The launcher needs GitHub CLI (`gh`) and Node.js 18 or later. If you need to sign in, the launcher starts `gh auth login`. Use the browser and profile where you normally review to retain your local decisions. Your account needs write access to this repository to publish changes. The public log includes choices, comments, reviewer names and edit instructions.
+
+You can also open `index.html` directly and use **Pull only**, or enter a personal token for the tab to push.
 
 For the repository owner, use a fine-grained token restricted to `tsackton/taeglar-art-review` with **Contents: Read and write**. An invited outside collaborator using a classic token for this public repository needs the `public_repo` scope. [GitHub’s guide to personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 

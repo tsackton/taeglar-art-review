@@ -246,5 +246,6 @@
       return {count,skipped};
     }
   }
-  window.ReviewLog = ReviewLog;
+  if (typeof module !== "undefined" && module.exports) module.exports = {canonical};
+  else window.ReviewLog = ReviewLog;
 })();
