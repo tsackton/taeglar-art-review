@@ -1,0 +1,29 @@
+.review-editor{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0 14px}
+.review-editor .review-block,.review-editor .review-conflict{min-width:0;border:1px solid var(--line);border-radius:6px;background:#fbfbf6;padding:14px}
+.review-editor h3{font:normal 21px/1.2 var(--serif);margin:0 0 10px}
+.review-editor .review-section-title{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-bottom:10px}
+.review-editor .review-section-title h3{margin:0}
+.review-state{font-size:12px;font-weight:600;color:var(--muted)}
+.review-state.state-requested{color:#7a4d16}
+.review-state.state-approved{color:#306041}
+.review-state.state-rejected{color:#8a3a2e}
+.review-field{margin:0 0 8px}
+.review-field textarea{display:block;resize:vertical;width:100%;min-height:3.7em;margin-top:4px;padding:7px 8px;border:1px solid #bdc5ba;border-radius:4px;background:#fffefa;color:var(--ink);font:normal 14px/1.4 var(--sans)}
+.review-field textarea:focus-visible{outline:3px solid #548472;outline-offset:1px}
+.review-buttons{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.review-editor button{font-size:12px}
+.review-entries{margin:0 0 12px;padding:0;list-style:none}
+.review-entry{padding:8px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.review-event-name,.review-byline{display:block}
+.review-event-name{font-size:13px}
+.review-byline{display:flex;gap:.7em;align-items:baseline;flex-wrap:wrap;color:var(--muted);font-size:12px}
+.review-byline strong{font-weight:600}
+.review-text{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;margin:3px 0}
+.review-editor .review-conflict{background:#faf2de}
+.review-conflict .review-entry button{margin-top:5px}
+.review-editor>.review-conflict,.review-history,.review-message{grid-column:1/-1}
+.review-history summary{cursor:pointer}
+.review-history{font-size:13px;color:var(--muted)}
+.review-message{margin:0;color:#8a3a2e}
+.review-message:empty{display:none}
+@media(max-width:950px){.review-editor{grid-template-columns:minmax(0,1fr)}}
