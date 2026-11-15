@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:55:26.537Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "she should be slightly older and remove the freckles",
+  "id": "01f8cbd9-7b4e-4e24-b52b-aa89996c6c5f",
+  "itemId": "catalog-2337",
+  "mode": "edits",
+  "parents": [
+    "3e3f2598-3acc-4e87-a054-8828c79798d7"
+  ],
+  "sourceSha256": "659a3f02296039d679f90c240b664521fd0604b950e76ebf7028422acaa44d01",
+  "type": "choice",
+  "variantSha256": "5d71e68cd1c010f6a49f147fc1de514cd8a8cfd3c8f9a6854fa104385b363bc0"
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T18:04:25.122Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "remove earrinigs, necklace, facial jewelry, add some clothing/undershirt to cover chest a bit more",
+  "id": "b82d5b0b-38d9-4344-a25b-ae85b79398db",
+  "itemId": "catalog-1498",
+  "mode": "edits",
+  "parents": [
+    "2d5860a9-2dc3-41df-8661-4ad242e4dcdf"
+  ],
+  "sourceSha256": "4c11911b16546851afa5447f3471e0348c1f7721274a3f8fc5bbabd74481429d",
+  "type": "choice",
+  "variantSha256": "5d3d3c4ced2c0e9baee5f383241c7dcce995dde1cfa4745f58405b7087c95a0d"
+}

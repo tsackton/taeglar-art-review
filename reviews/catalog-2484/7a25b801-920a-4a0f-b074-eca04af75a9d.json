@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:58:46.988Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "improve the realism of the wound -- the blood looks slightly painted on",
+  "id": "7a25b801-920a-4a0f-b074-eca04af75a9d",
+  "itemId": "catalog-2484",
+  "mode": "edits",
+  "parents": [
+    "38e87e63-b3b2-4b9e-b52b-6d78f034837b"
+  ],
+  "sourceSha256": "8058b6b34d6b55b9b071ae7d475a97fcb8cd0e0d1e0e186bb335f360c42d3e16",
+  "type": "choice",
+  "variantSha256": "d7eba7a47796ee06cbda9d5c82fb658217e3d1000d09e564de6eaf4e9e7da2c1"
+}

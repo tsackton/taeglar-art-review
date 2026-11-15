@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T17:58:02.686Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "she is an innkeeper, ideally she'd be doing something with her hands -- making bread, chopping, serving ale, something -- they look a bit awkard just plain",
+  "id": "d24f396a-9d3e-49eb-88bf-f77c70dd9bce",
+  "itemId": "catalog-2945",
+  "mode": "edits",
+  "parents": [
+    "73264404-0e4f-4628-9ea4-d8faad8685e4"
+  ],
+  "sourceSha256": "f278d17e275e3f78c4d2f17d9647ab091ee64db4348be43f1e50c1683ae5be89",
+  "type": "choice",
+  "variantSha256": "12542d76eb0ff26e4cc869edd8646f17f2a36d550e5b6d07e44da31fe9801ba5"
+}

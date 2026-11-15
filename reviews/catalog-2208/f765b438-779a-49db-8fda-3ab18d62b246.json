@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T18:04:51.392Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "remove earrings",
+  "id": "f765b438-779a-49db-8fda-3ab18d62b246",
+  "itemId": "catalog-2208",
+  "mode": "edits",
+  "parents": [
+    "845a5f77-4861-4637-9e7a-a6bb3324ca9e"
+  ],
+  "sourceSha256": "1cfbf936703257f4e34a8cad919732ff80842faba7ded1a6fdbcf7b325b44ccd",
+  "type": "choice",
+  "variantSha256": "fc2d02d5d6ce2fc15ff89c3c824a5a8b3ec4d329e83f79702b2274c7efdb2134"
+}

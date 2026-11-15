@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T18:00:44.774Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "right hand has 6 fingers - fix it. also the bow should be simpler/more plain wooden bow",
+  "id": "d920b67d-6834-450e-ace6-e5f2d3d18a5d",
+  "itemId": "catalog-989",
+  "mode": "edits",
+  "parents": [
+    "6ec08c81-c9f1-487e-85d0-b4fbfa132486"
+  ],
+  "sourceSha256": "516b5dec17cb317d184bf66679a607469730b44eb3eea8fbf7285ea1d007914e",
+  "type": "choice",
+  "variantSha256": "f582728b54ce1db65232596dad72594d4b1a73808c8a4db36b10dc51452c6368"
+}

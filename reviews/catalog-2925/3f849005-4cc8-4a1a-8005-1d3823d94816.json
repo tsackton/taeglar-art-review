@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-15T18:06:10.131Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "remove elaborate necklace and make a simple silver or gold chain instead",
+  "id": "3f849005-4cc8-4a1a-8005-1d3823d94816",
+  "itemId": "catalog-2925",
+  "mode": "edits",
+  "parents": [
+    "40636b6b-e4cb-47d1-9d39-ffc194f1bdfe"
+  ],
+  "sourceSha256": "92a728bdbf08ae5a02e8917cc6aa27e2a9f98ea9849f1773c9758d5580db7887",
+  "type": "choice",
+  "variantSha256": "557948bd147e8a2335bd09cce75a490c85cf42910da1a3368c18b0db415e7d0b"
+}
