@@ -1,10 +1,8 @@
 "use strict";
 (() => {
-  const prefix = "taelgar-vault-restyle:event:v1:";
-  const oldKey = "taelgar-vault-restyle:decisions:v1";
   const hash = /^[a-f0-9]{64}$/;
   const eventId = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,219}$/;
-  const itemId = /^(?:catalog-[0-9]+|vault-[a-f0-9]+)$/;
+  const itemId = /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/;
   const choices = new Set(["original","plain-faithful","plain-corrected","setting-faithful",
     "setting-corrected","light-faithful","light-corrected","dark-faithful","dark-corrected",
     "faithful","light-correction","full-correction"]);
@@ -63,16 +61,7 @@
     return events.filter(e => !superseded.has(e.id));
   }
   function choiceHeads(events) {
-    const all = events.filter(e => e.type === "choice");
-    const legacy = all.filter(e => e.id.startsWith("legacy-")).at(-1);
-    if (!legacy) return heads(all);
-    // V1 backups only carried timestamps. A legacy choice is a baseline and cannot resurrect
-    // a selection cleared or replaced by a later native change.
-    const native = all.filter(e => !e.id.startsWith("legacy-"));
-    const nativeHeads = heads(native);
-    if (native.some(e => e.parents.includes(legacy.id))) return nativeHeads;
-    const newer = nativeHeads.filter(e => e.at >= legacy.at);
-    return newer.length ? newer : [legacy];
+    return heads(events.filter(e => e.type === "choice"));
   }
 
   function summarizeReviews(history,proposalId) {
@@ -94,22 +83,16 @@
   }
 
   class ReviewLog {
-    constructor(items,outputs,storage = localStorage) {
+    constructor(projectId,items,outputs,storage = localStorage) {
       this.storage = storage;
+      this.storagePrefix = "art-review:" + projectId + ":events:";
       this.items = new Map(items.map(item => [item.id,item]));
       this.outputs = outputs;
       this.records = new Map();
       this.byItem = new Map();
       this.cache = new Map();
       this.refresh();
-      const old = storage.getItem(oldKey);
-      if (old) {
-        const parsed = JSON.parse(old);
-        requireValue(parsed && typeof parsed === "object" && !Array.isArray(parsed),"Invalid saved v1 decisions.");
-        this.importLegacy(Object.entries(parsed).map(([id,row]) => ({...row,id})));
-      }
     }
-    static get storagePrefix() { return prefix; }
     remember(e) {
       this.records.set(e.id,e);
       if (!this.byItem.has(e.itemId)) this.byItem.set(e.itemId,[]);
@@ -119,11 +102,11 @@
     refresh() {
       for (let i = 0; i < this.storage.length; i++) {
         const key = this.storage.key(i);
-        if (!key?.startsWith(prefix) || this.records.has(key.slice(prefix.length))) continue;
+        if (!key?.startsWith(this.storagePrefix) || this.records.has(key.slice(this.storagePrefix.length))) continue;
         const saved = this.storage.getItem(key);
         if (saved === null) continue;
         const e = canonical(JSON.parse(saved));
-        requireValue(key === prefix + e.id,"A stored review has a mismatched ID.");
+        requireValue(key === this.storagePrefix + e.id,"A stored review has a mismatched ID.");
         this.remember(e);
       }
     }
@@ -135,7 +118,7 @@
         const e = canonical(raw);
         let known = batch.get(e.id) || this.records.get(e.id);
         if (!known) {
-          const saved = this.storage.getItem(prefix + e.id);
+          const saved = this.storage.getItem(this.storagePrefix + e.id);
           if (saved !== null) known = canonical(JSON.parse(saved));
         }
         if (known) requireValue(JSON.stringify(e) === JSON.stringify(known),
@@ -145,7 +128,7 @@
       let added = 0;
       for (const e of batch.values()) {
         if (this.records.has(e.id)) continue;
-        this.storage.setItem(prefix + e.id,JSON.stringify(e));
+        this.storage.setItem(this.storagePrefix + e.id,JSON.stringify(e));
         this.remember(e);
         added++;
       }
@@ -223,27 +206,6 @@
       if (proposalId) requireValue(history.some(e => e.id === proposalId && e.type === "choice"),
         "The comment refers to an unknown selection.");
       return this.append(id,"comment",author,{text:text.trim(),proposalId,requestId});
-    }
-    importLegacy(rows) {
-      requireValue(Array.isArray(rows),"Expected a list of saved decisions.");
-      let count = 0, skipped = 0;
-      for (const row of rows) {
-        const item = this.items.get(row?.id);
-        if (!item || item.sha256 !== row.sourceSha256 || !string(row.updatedAt,40) ||
-            !Number.isFinite(Date.parse(row.updatedAt)) || !choices.has(row.choice) ||
-            (row.choice !== "original" && (!hash.test(row.variantSha256) || this.variant(row.id,row.choice)?.sha256 !== row.variantSha256))) {
-          skipped++; continue;
-        }
-        const at = new Date(row.updatedAt).toISOString();
-        const variantSha256 = row.choice === "original" ? null : row.variantSha256;
-        const id = ["legacy",item.id,Date.parse(at).toString(36),row.choice,item.sha256,variantSha256 || "original"].join("-");
-        if (this.records.has(id)) continue;
-        const state = this.state(item.id);
-        if (state.proposalId && state.updatedAt > at) { skipped++; continue; }
-        count += this.merge([{id,itemId:item.id,type:"choice",at,author:"Imported decision",sourceSha256:item.sha256,
-          choice:row.choice,mode:"use",editNote:"",variantSha256,parents:[]}]);
-      }
-      return {count,skipped};
     }
   }
   window.ReviewLog = ReviewLog;

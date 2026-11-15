@@ -1,9 +1,23 @@
 "use strict";
-(() => {
+async function startGallery() {
   const byId = id => document.getElementById(id);
-  const source = window.RESTYLE_INVENTORY;
-  const items = (Array.isArray(source) ? source : source?.items || []).map(item => ({...item, id: String(item.id)}));
-  const outputs = window.RESTYLE_OUTPUTS || {};
+  async function readManifest(name) {
+    const response = await fetch("/data/" + name);
+    if (!response.ok) throw Error("Could not read " + name + " in the image source folder.");
+    try {
+      return await response.json();
+    } catch {
+      throw Error(name + " does not contain valid JSON.");
+    }
+  }
+  const [inventory,outputs] = await Promise.all([readManifest("inventory.json"),readManifest("outputs.json")]);
+  const {projectId,items} = inventory || {};
+  if (typeof projectId !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(projectId) || !Array.isArray(items)) {
+    throw Error("inventory.json must include a projectId and an items list.");
+  }
+  if (!outputs || Array.isArray(outputs) || typeof outputs !== "object") {
+    throw Error("outputs.json must contain review sets keyed by image ID.");
+  }
   const kinds = {portrait: "Portrait", object: "Object", scene: "Scene or other illustration"};
   const treatments = {
     portrait: [["plain-faithful","Plain · faithful"],["plain-corrected","Plain · corrected"],["setting-faithful","Setting · faithful"],["setting-corrected","Setting · corrected"]],
@@ -11,8 +25,8 @@
     scene: [["faithful","Faithful"],["light-correction","Light corrections"],["full-correction","Full corrections"]]
   };
   const statuses = {ready:"Reviewed", pending:"Awaiting review", missing:"Awaiting images"};
-  const reviewerKey = "taelgar-vault-restyle:reviewer";
-  const log = new ReviewLog(items,outputs,localStorage);
+  const reviewerKey = "art-review:" + projectId + ":reviewer";
+  const log = new ReviewLog(projectId,items,outputs);
   const pageSize = 20;
   const index = new Map(items.map(item => [item.id, item]));
   let active = decodeURIComponent(location.hash.slice(1));
@@ -48,7 +62,12 @@
     byId("notice").hidden = !message;
   }
   function url(path) {
-    return path.split("/").map(encodeURIComponent).join("/");
+    const parts = path.split("/");
+    if (!["originals","thumbnails","variants"].includes(parts[0]) ||
+        parts.some(part => !part || part === "." || part === ".." || part.includes("\\"))) {
+      throw Error("Invalid image path in the image source: " + path);
+    }
+    return "/data/" + parts.map(encodeURIComponent).join("/") + "?project=" + encodeURIComponent(projectId);
   }
   function makeImage(path, alt, lazy = false) {
     const img = node("img");
@@ -58,7 +77,6 @@
     img.src = url(path);
     return img;
   }
-  function originalPath(item) { return item.originalPreview || item.source; }
   function setStatus(item) {
     const result = outputs[item.id];
     return result?.reviewed ? "ready" : result ? "pending" : "missing";
@@ -261,7 +279,7 @@
       const state = log.state(item.id);
       const status = state.reviewConflicts.length ? "Conflicting reviews" : {requested:"Needs review",approved:"Approved",rejected:"Rejected"}[state.reviewStatus];
       text.append(node("strong","",item.label),node("small","",[describeChoice(item,state),status].filter(Boolean).join(" · ")));
-      b.append(makeImage(item.thumbnail || originalPath(item),"",true),text);
+      b.append(makeImage(item.thumbnail,"",true),text);
       list.append(b);
     }
   }
@@ -345,12 +363,12 @@
     cap.append(node("h3","",name));
     if (original || variant) {
       const thumb = node("a","art");
-      thumb.href = url(original ? originalPath(item) : variant.path);
+      thumb.href = url(original ? item.source : variant.path);
       thumb.dataset.item = item.id;
       thumb.dataset.key = key;
       thumb.setAttribute("aria-haspopup","dialog");
       thumb.setAttribute("aria-label","View " + name + " in lightbox");
-      thumb.append(makeImage(original ? item.thumbnail || originalPath(item) : variant.path,item.label + " · " + name));
+      thumb.append(makeImage(original ? item.thumbnail : variant.path,item.label + " · " + name));
       thumb.addEventListener("click",openViewer);
       fig.append(thumb);
       if (selected) {
@@ -370,7 +388,7 @@
     article.replaceChildren();
     const item = index.get(active);
     if (!item) {
-      article.append(node("p","empty",source ? "No illustrations match these filters." : "The illustration inventory is being prepared."));
+      article.append(node("p","empty","No illustrations match these filters."));
       return;
     }
     const pos = matches.indexOf(item), top = node("div","detail-top"), status = setStatus(item);
@@ -432,27 +450,23 @@
       rows.push({id:item.id,label:item.label,vaultPath:item.vaultPath,kind:item.kind,notes:item.notes,choice:saved.choice,mode:saved.mode,editNote:saved.editNote,
         selectionConflict:Boolean(saved.conflicts.length),reviewStatus:saved.reviewConflicts.length ? "conflict" : saved.reviewStatus,
         reviewComment:saved.reviewComment,requestedBy:saved.requestedBy,proposalAuthor:saved.proposalAuthor,
-        sourceSha256:saved.sourceSha256,variantSha256:saved.variantSha256,updatedAt:saved.updatedAt,selectedPath:saved.conflicts.length ? null : v?.path || item.vaultPath});
+        sourceSha256:saved.sourceSha256,variantSha256:saved.variantSha256,updatedAt:saved.updatedAt,selectedPath:saved.conflicts.length ? null : v?.path || item.source});
     }
-    const data={project:"taelgar-vault-restyle",schemaVersion:2,events:log.events(),exportedAt:new Date().toISOString(),inventoryCount:items.length,decisions:rows};
+    const data={project:projectId,schemaVersion:2,events:log.events(),exportedAt:new Date().toISOString(),inventoryCount:items.length,decisions:rows};
     const blob=new Blob([JSON.stringify(data,null,2) + "\n"],{type:"application/json"});
     const href=URL.createObjectURL(blob), a=node("a");
-    a.href=href; a.download="taelgar-vault-restyle-decisions-" + data.exportedAt.slice(0,10) + ".json";
+    a.href=href; a.download=projectId + "-decisions-" + data.exportedAt.slice(0,10) + ".json";
     document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(href),30000);
   }
   async function importDecisions(file) {
     if (!file) return;
     try {
       const data = JSON.parse(await file.text());
-      if (data.project !== "taelgar-vault-restyle") throw Error("This file belongs to another project.");
+      if (data.project !== projectId) throw Error("This file belongs to another project.");
+      if (data.schemaVersion !== 2 || !Array.isArray(data.events)) throw Error("Choose an exported art review file.");
       log.refresh();
-      if (data.schemaVersion === 2 && Array.isArray(data.events)) {
-        const count = log.merge(data.events);
-        notice("Imported " + count + " new history entries. Sync to share them.");
-      } else if (data.schemaVersion === 1 && Array.isArray(data.decisions)) {
-        const result = log.importLegacy(data.decisions);
-        notice("Imported " + result.count + " decisions. Skipped " + result.skipped + " existing, older or unmatched entries.");
-      } else throw Error("This file is not a supported Vault restyle export.");
+      const count = log.merge(data.events);
+      notice("Imported " + count + " new history entries. Sync to share them.");
       filter();
     } catch(error) { notice(error.message || "Could not import decisions."); }
     byId("file").value="";
@@ -466,10 +480,6 @@
   });
   let syncInProgress = false;
   async function syncReviews(pullOnly) {
-    if (location.protocol === "file:") {
-      notice("Open Art Review.command on Mac or Open Art Review.cmd on Windows to sync. To move unsynced choices from this page, export them here and import them in the launcher.");
-      return;
-    }
     if (syncInProgress) return;
     syncInProgress = true;
     byId("sync").disabled = byId("pull").disabled = true;
@@ -480,7 +490,7 @@
         log.refresh();
         const response = await fetch("/sync",{
           method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({events:log.events(),pullOnly})
+          body:JSON.stringify({projectId,events:log.events(),pullOnly})
         });
         const result = await response.json();
         if (!response.ok) throw Error(result.error || "Could not sync.");
@@ -507,10 +517,19 @@
   let storageTimer;
   window.addEventListener("storage",event=>{
     if (event.key === reviewerKey) byId("reviewerName").value = event.newValue || "";
-    else if (event.key === null || event.key.startsWith(ReviewLog.storagePrefix)) {
+    else if (event.key === null || event.key.startsWith(log.storagePrefix)) {
       clearTimeout(storageTimer);
       storageTimer = setTimeout(()=>{log.refresh();filter();},100);
     }
   });
-  initFilters(); filter();
-})();
+  initFilters();
+  filter();
+  document.querySelector("main").hidden = false;
+  document.querySelector(".actions").hidden = false;
+  notice("");
+}
+startGallery().catch(error => {
+  const message = document.getElementById("notice");
+  message.textContent = "Could not open the gallery. " + error.message;
+  message.hidden = false;
+});

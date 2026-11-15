@@ -11,7 +11,8 @@ from zipfile import BadZipFile, ZipFile
 REPO = "repos/tsackton/taeglar-art-review"
 BRANCH = "main"
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,219}")
-ITEM = re.compile(r"(?:catalog-[0-9]+|vault-[a-f0-9]+)")
+ITEM = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}")
+PROJECT = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}")
 FINGERPRINT = re.compile(r"[a-f0-9]{64}")
 CHOICES = (None, "original", "plain-faithful", "plain-corrected", "setting-faithful",
            "setting-corrected", "light-faithful", "light-corrected", "dark-faithful",
@@ -53,7 +54,7 @@ def valid_id(value):
     return isinstance(value, str) and ID.fullmatch(value)
 
 
-def event_path(event):
+def event_path(event, project_id):
     """Only recognized review records can create files, always under their image ID."""
     if not isinstance(event, dict):
         raise ValueError("Invalid review entry.")
@@ -92,12 +93,11 @@ def event_path(event):
             status = event["status"]
             if status not in ("requested", "approved", "rejected") or (status == "requested") != (event["requestId"] is None):
                 raise ValueError("Invalid review status.")
-    return "reviews/" + event["itemId"] + "/" + quote(event["id"], safe="") + ".json"
+    return "reviews/" + project_id + "/" + event["itemId"] + "/" + quote(event["id"], safe="") + ".json"
 
 
-def read_remote(head):
+def read_remote(head, project_id):
     # The archive is pinned to the same commit used as the parent of any write.
-    # Reading it in memory also works on Windows with legacy IDs containing colons.
     data = gh_api("zipball/" + head, binary=True)
     events = {}
     try:
@@ -107,21 +107,23 @@ def read_remote(head):
     with downloaded as archive:
         for info in archive.infolist():
             path = info.filename.partition("/")[2]
-            if not path.startswith("reviews/") or not path.endswith(".json"):
+            if not path.startswith(f"reviews/{project_id}/") or not path.endswith(".json"):
                 continue
             event = json.loads(archive.read(info))
-            if event_path(event) != path or event["id"] in events:
+            if event_path(event, project_id) != path or event["id"] in events:
                 raise ValueError("Duplicate or misplaced shared review entry: " + path)
             events[event["id"]] = event
     return events
 
 
-def sync(events, pull_only=False):
+def sync(events, *, project_id, pull_only=False):
+    if not isinstance(project_id, str) or not PROJECT.fullmatch(project_id):
+        raise ValueError("Invalid image source project ID.")
     if not isinstance(events, list) or not isinstance(pull_only, bool):
         raise ValueError("Invalid sync request.")
     local = {}
     for event in events:
-        event_path(event)
+        event_path(event, project_id)
         if event["id"] in local and local[event["id"]] != event:
             raise ValueError("Two local review entries share an ID with different contents.")
         local[event["id"]] = event
@@ -132,7 +134,7 @@ def sync(events, pull_only=False):
     for _ in range(6):
         commit = gh_api("branches/" + BRANCH)["commit"]
         head = commit["sha"]
-        remote = read_remote(head)
+        remote = read_remote(head, project_id)
         for key in remote.keys() & local.keys():
             if remote[key] != local[key]:
                 raise ValueError("Shared and local copies of a review entry disagree: " + key)
@@ -150,7 +152,7 @@ def sync(events, pull_only=False):
             raise RuntimeError("GitHub could not update the shared log. " + failure)
 
         entries = [
-            {"path": event_path(e), "mode": "100644", "type": "blob",
+            {"path": event_path(e, project_id), "mode": "100644", "type": "blob",
              "content": json.dumps(e, ensure_ascii=True, indent=2, sort_keys=True) + "\n"}
             for e in missing
         ]

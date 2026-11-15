@@ -9,9 +9,9 @@
 <link rel="stylesheet" href="review-editor.css">
 </head>
 <body>
-<header class="top"><div class="brand"><span class="mark" aria-hidden="true">✦</span><span>Taelgar Art Catalog</span><span class="slash">/</span><strong>Vault restyle</strong></div><div class="actions"><label class="reviewer-name">Reviewer<input id="reviewerName" type="text" maxlength="80" placeholder="Your name" autocomplete="off"></label><span id="savedCount"></span><button id="import" title="Merge choices from a previously exported decisions file">Import decisions</button><input type="file" id="file" accept=".json,application/json" hidden><button id="export" title="Download all saved choices as a JSON file">Export decisions</button><button id="pull" title="Get shared decisions from GitHub">Pull only</button><button id="sync" class="primary" title="Pull and publish review entries in the public GitHub log">Sync</button></div></header>
-<p id="notice" role="status" hidden></p>
-<main>
+<header class="top"><div class="brand"><span class="mark" aria-hidden="true">✦</span><span>Taelgar Art Catalog</span><span class="slash">/</span><strong>Vault restyle</strong></div><div class="actions" hidden><label class="reviewer-name">Reviewer<input id="reviewerName" type="text" maxlength="80" placeholder="Your name" autocomplete="off"></label><span id="savedCount"></span><button id="import" title="Merge choices from a previously exported decisions file">Import decisions</button><input type="file" id="file" accept=".json,application/json" hidden><button id="export" title="Download all saved choices as a JSON file">Export decisions</button><button id="pull" title="Get shared decisions from GitHub">Pull only</button><button id="sync" class="primary" title="Pull and publish review entries in the public GitHub log">Sync</button></div></header>
+<p id="notice" role="status">Loading illustrations…</p>
+<main hidden>
 <aside>
 <div class="library-head"><div><h1>Illustrations</h1><small id="reviewCount"></small></div><button id="reset" class="text">Reset filters</button></div>
 <label>Search<input type="search" id="query" placeholder="Title, filename, or note"></label>
@@ -47,6 +47,6 @@
   <p id="viewer-error" hidden>This image could not be displayed. <a id="viewer-original" target="_blank" rel="noopener">Open image file</a></p>
  </div>
 </dialog>
-<script src="inventory.js"></script><script src="outputs.js"></script><script src="review-log.js"></script><script src="review-editor.js"></script><script src="review.js"></script>
+<script src="review-log.js"></script><script src="review-editor.js"></script><script src="review.js"></script>
 </body>
 </html>
