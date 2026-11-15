@@ -171,6 +171,7 @@
         reviewStatus:latest?.status || "none",reviewComment:latest?.text || "",
         requestId:valid ? reviews.request?.id || null : null,requestedBy:valid ? reviews.request?.author || "" : "",
         comments:history.filter(e => e.type === "comment"),history,conflicts:[...alternatives.values()],
+        currentPicks:proposals.filter(e => e.choice && !staleProposalIds.includes(e.id)),
         reviewParentIds:[...reviews.liveRequests,...reviews.verdicts].map(e => e.id),
         reviewConflicts:valid ? [...reviews.liveRequests.slice(0,-1),...reviews.verdicts.slice(0,-1).filter(e => e.status !== latest.status)] : [],
         staleChoice:!valid,staleProposalIds};

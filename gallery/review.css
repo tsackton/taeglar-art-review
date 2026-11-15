@@ -5,8 +5,6 @@ article{padding:clamp(18px,3.1vw,50px);min-width:0}.detail-top{display:flex;alig
 
 @media(max-width:750px){.top{align-items:flex-start;flex-wrap:wrap}.actions{flex-wrap:wrap}main{display:block}aside{min-height:0;padding:15px;border-right:0;border-bottom:1px solid var(--line)}.list{max-height:180px;overflow:auto}.library-head{margin-bottom:8px}.results-head{margin:5px 0}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}article{padding:18px 12px}.detail-nav{font-size:11px}}
 
-#reviewCount{display:block;margin-top:3px;color:var(--muted);font-size:12px}
-
 body:has(#viewer[open]){overflow:hidden}
 #viewer{position:fixed;inset:0;width:100vw;height:100%;height:100dvh;max-width:none;max-height:none;box-sizing:border-box;margin:0;padding:0;border:0;background:#141615;color:#f4f4ef}
 #viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr)}

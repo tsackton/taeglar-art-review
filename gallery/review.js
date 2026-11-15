@@ -207,11 +207,12 @@ async function startGallery() {
       option.value = note;
       byId("notes").append(option);
     }
-    ["kind","decision","reviewFilter","requester","query","note"].forEach(id => {
+    const filterIds = ["kind","decision","decidedBy","reviewFilter","requester","query","note"];
+    filterIds.forEach(id => {
       byId(id).addEventListener(["query","note"].includes(id) ? "input" : "change", () => { page = 0; filter(); });
     });
     byId("reset").onclick = () => {
-      ["kind","decision","reviewFilter","requester","query","note"].forEach(id => { byId(id).value = ""; });
+      filterIds.forEach(id => { byId(id).value = ""; });
       byId("folderPicker").open = false;
       chooseFolder("");
     };
@@ -220,22 +221,25 @@ async function startGallery() {
     if (review === "conflict") return state.reviewConflicts.length > 0;
     return !state.reviewConflicts.length && state.reviewStatus === review;
   }
+  function updatePeopleFilter(id,people) {
+    const select = byId(id), previous = select.value;
+    select.replaceChildren(new Option("Everyone",""));
+    for (const name of Array.from(people).sort()) select.add(new Option(name,name));
+    select.value = people.has(previous) ? previous : "";
+    return select.value;
+  }
   function filter() {
     const val = id=>byId(id).value.trim().toLowerCase();
     const kind = val("kind"), pick = val("decision"), text = val("query"), note = val("note");
     const review = byId("reviewFilter").value;
-    const reviewerSelect = byId("requester");
-    const requestedBy = reviewerSelect.value;
-    const people = new Set();
-    if (review) {
-      for (const item of items) {
-        const state = log.state(item.id);
-        if (state.requestedBy && matchesReview(state,review)) people.add(state.requestedBy);
-      }
+    const authors = new Set(), requesters = new Set();
+    for (const item of items) {
+      const state = log.state(item.id);
+      for (const pick of state.currentPicks) if (pick.author) authors.add(pick.author);
+      if (review && state.requestedBy && matchesReview(state,review)) requesters.add(state.requestedBy);
     }
-    reviewerSelect.replaceChildren(new Option("Everyone",""));
-    for (const person of Array.from(people).sort()) reviewerSelect.add(new Option(person,person));
-    reviewerSelect.value = people.has(requestedBy) ? requestedBy : "";
+    const decidedBy = updatePeopleFilter("decidedBy",authors);
+    const requestedBy = updatePeopleFilter("requester",requesters);
     byId("requesterLabel").hidden = !review;
     matches = items.filter(item => {
       if (kind && kind !== item.kind) return false;
@@ -243,13 +247,16 @@ async function startGallery() {
       if (note && !item.notes.some(n=>n.toLowerCase().includes(note))) return false;
       if (text && ![item.label,item.vaultPath,...item.notes].some(n=>(n || "").toLowerCase().includes(text))) return false;
       const state = log.state(item.id);
-      if (review && !matchesReview(state,review) || reviewerSelect.value && state.requestedBy !== reviewerSelect.value) return false;
-      if (pick) {
-        if (pick === "edits" && state.mode !== "edits" || pick === "conflict" && !state.conflicts.length) return false;
-        const saved = state.choice ? state : null;
-        if (pick === "open" && saved || pick === "original" && saved?.choice !== "original" || pick === "variant" && (!saved || saved.choice === "original")) return false;
-      }
-      return true;
+      if (review && !matchesReview(state,review) || requestedBy && state.requestedBy !== requestedBy) return false;
+      if (pick === "conflict" && !state.conflicts.length) return false;
+      const selections = decidedBy ? state.currentPicks.filter(e => e.author === decidedBy) : [state];
+      return selections.some(selection => {
+        if (pick === "open") return !selection.choice;
+        if (pick === "original") return selection.choice === "original";
+        if (pick === "variant") return selection.choice && selection.choice !== "original";
+        if (pick === "edits") return selection.mode === "edits";
+        return true;
+      });
     });
     let pos = matches.findIndex(i=>i.id === active);
     if (pos < 0) active = matches[0]?.id || "";
@@ -437,7 +444,6 @@ async function startGallery() {
     renderList(); renderDetail();
     const count = items.filter(decision).length;
     byId("savedCount").textContent = count.toLocaleString() + (count === 1 ? " decision" : " decisions");
-    byId("reviewCount").textContent = items.filter(item=>setStatus(item)==="ready").length.toLocaleString() + " of " + items.length.toLocaleString() + " sets reviewed";
     try { history.replaceState(null,"",active ? "#" + encodeURIComponent(active) : location.pathname); } catch {}
   }
   function exportDecisions() {
