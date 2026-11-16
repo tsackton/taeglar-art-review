@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:40:27.297Z",
+  "author": "tim",
+  "choice": "plain-corrected",
+  "editNote": "make hat a little bit neater, still straw but not obviously falling apart, remove stray threads from clothes",
+  "id": "30424f1a-1b45-4fcc-8c15-6d8ead8a35e3",
+  "itemId": "catalog-1963",
+  "mode": "edits",
+  "parents": [
+    "9833ac79-bfab-4687-b90b-5cd9462af221"
+  ],
+  "sourceSha256": "09d948fe7b944c9a10574b5797172e3fa06026806cec1d7714ef974dc949ca18",
+  "type": "choice",
+  "variantSha256": "3a30286be655537351e6a13ea837e5aa302195d60cb545bd513839fcfba88c75"
+}

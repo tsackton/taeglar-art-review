@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:37:02.329Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "cloak is oddly structured, fix outfit to be a normal cloak over her armor. remove shield",
+  "id": "fb7e7085-00c2-480d-b9fe-d6a663b86ea7",
+  "itemId": "catalog-594",
+  "mode": "edits",
+  "parents": [
+    "d5d21d2c-2ed6-43fb-8955-827d2e1f6fdc"
+  ],
+  "sourceSha256": "e3cd362059a010d24eca8b03a030923b119e1ef5bb2bfe42fe3c4354716b52b2",
+  "type": "choice",
+  "variantSha256": "61559887dc7a2529ae8dd8a1bbe150e7cb1b937bebc1d06dcb3cd02bd71f43e3"
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:39:17.506Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "chainmail looks fake, especially around neck. fix armor. fix outfit to clean up mess and so all the parts look like they connect. simplify background to remove arch and stone structures",
+  "id": "6731d87d-8046-44b9-be6a-1eb6be9adc53",
+  "itemId": "catalog-1079",
+  "mode": "edits",
+  "parents": [
+    "558d299d-7fc4-405b-930f-6af2ad62d452"
+  ],
+  "sourceSha256": "dea8fc49dd1aefe20ff97a2cf0d8459e2b65a7d167f4f678a10b0d3305303502",
+  "type": "choice",
+  "variantSha256": "5f54404fbe9858b6af7b23bfe30ff1cf8a88f0dd590850b940c1c41084ecbba8"
+}

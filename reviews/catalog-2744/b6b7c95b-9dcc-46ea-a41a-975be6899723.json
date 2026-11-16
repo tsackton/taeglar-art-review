@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:41:18.973Z",
+  "author": "tim",
+  "choice": "plain-corrected",
+  "editNote": "zoom out 20%. fix armor collar to make sense, remove obvious blemishes from face",
+  "id": "b6b7c95b-9dcc-46ea-a41a-975be6899723",
+  "itemId": "catalog-2744",
+  "mode": "edits",
+  "parents": [
+    "3b9aeaf6-eb4b-42c9-8af7-1e28e666b2bc"
+  ],
+  "sourceSha256": "6b387d1215f08e13d999183bf00b544c163c994303c9ea1f9144b7c06af13645",
+  "type": "choice",
+  "variantSha256": "43ebcea781ca6ce39c78ff103e193533e0df5cecdb7de80af622d5b03c18c333"
+}

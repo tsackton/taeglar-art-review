@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:34:09.988Z",
+  "author": "tim",
+  "choice": "plain-corrected",
+  "editNote": "hair blends into hood, these need to be distinct - remove the hood on her cloak to fix. also make the background a little more textured with a lighter wash",
+  "id": "1aaf8e64-9eb4-4bf8-867c-8ed53553ace9",
+  "itemId": "catalog-2620",
+  "mode": "edits",
+  "parents": [
+    "e83f36fd-d406-4e0b-802c-9ba3f51c10d2"
+  ],
+  "sourceSha256": "ea42c10bbdf767706f4bf65a8ba1a6f2b54fc655bb9cfc2dc839a817ef4f756c",
+  "type": "choice",
+  "variantSha256": "6a40fe0eda06b5ebb375d848974d0c9eb9ef60926030bd9d384157ce06587ab3"
+}

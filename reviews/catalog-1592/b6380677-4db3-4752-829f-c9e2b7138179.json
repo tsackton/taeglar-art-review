@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:46:55.299Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "replace background with a plain sun dappled wall (remove plant, arch, vines)",
+  "id": "b6380677-4db3-4752-829f-c9e2b7138179",
+  "itemId": "catalog-1592",
+  "mode": "edits",
+  "parents": [
+    "0cc6e918-204d-4b6c-9452-3743124510b1"
+  ],
+  "sourceSha256": "6707c6019066f43b8ba6b8a5c1abe143261b089cc838db3a08b3787f7d681fef",
+  "type": "choice",
+  "variantSha256": "68ac0429f9f9293a1525cc1aba509c2940c256fcd8691f4cf37b69f96f013315"
+}

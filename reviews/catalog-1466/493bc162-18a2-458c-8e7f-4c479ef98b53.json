@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:42:50.164Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "correct proportions - head is just slightly out of whack with body and arms. make background plain stone wall (remove vine and arch). fix shirt with weird straps/buttons that don't make sense",
+  "id": "493bc162-18a2-458c-8e7f-4c479ef98b53",
+  "itemId": "catalog-1466",
+  "mode": "edits",
+  "parents": [
+    "1f2d0ec2-db04-45eb-9930-99f9e20c35eb"
+  ],
+  "sourceSha256": "47496ec12ea23921962cdf64cc54f66bab2b7c832aea202ad8c4afa95b0f4a21",
+  "type": "choice",
+  "variantSha256": "caec5d2764c0846761114c8dcfa71de4ec7175822bb97b5baf804331b7fd67b2"
+}

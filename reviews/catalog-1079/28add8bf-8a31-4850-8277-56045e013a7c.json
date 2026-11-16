@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:37:44.078Z",
+  "author": "tim",
+  "choice": "plain-corrected",
+  "editNote": "",
+  "id": "28add8bf-8a31-4850-8277-56045e013a7c",
+  "itemId": "catalog-1079",
+  "mode": "edits",
+  "parents": [
+    "c39fb976-450a-4447-85a6-ebdeb820ac3c"
+  ],
+  "sourceSha256": "dea8fc49dd1aefe20ff97a2cf0d8459e2b65a7d167f4f678a10b0d3305303502",
+  "type": "choice",
+  "variantSha256": "8b2632f07157aa0b4d67685f224aa80fffe49589fec308f5ab88859cc623c43d"
+}
