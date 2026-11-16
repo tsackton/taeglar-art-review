@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T19:10:47.318Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "fix background - should be a rolling scrubland with blue sky",
+  "id": "c409127b-894c-4609-9480-11b12ea01cea",
+  "itemId": "catalog-2220",
+  "mode": "edits",
+  "parents": [
+    "b745c731-c705-4737-b488-f5bb40b06dd1"
+  ],
+  "sourceSha256": "926ef31c0fed006be122dcee2c44da907a920b4a15fd0fa8c33c0e9dcda10156",
+  "type": "choice",
+  "variantSha256": "4352079fd70ddc1abbf04813bfca4efe174e5e1adaac0c53564a1728deb95f78"
+}

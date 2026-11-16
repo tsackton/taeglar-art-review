@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T19:12:56.558Z",
+  "author": "tim",
+  "choice": "plain-corrected",
+  "editNote": "zoom out 15%. increase her beauty a touch. clean up clothing. smooth skin. make the background hint at an arid scrubland but keep it simple and not too detailed",
+  "id": "053516c4-770e-455e-9e93-2debdfe90246",
+  "itemId": "catalog-1615",
+  "mode": "edits",
+  "parents": [
+    "47eb155e-2df4-46e1-96de-e3ea394b7a60"
+  ],
+  "sourceSha256": "2bccc33e6d018534748bf12553876df4b3a057c223ac554297825170c4e82429",
+  "type": "choice",
+  "variantSha256": "062ae5dc638c15337c4cc6a54005ba21aee773c9b53883ce5904ff41a244051b"
+}

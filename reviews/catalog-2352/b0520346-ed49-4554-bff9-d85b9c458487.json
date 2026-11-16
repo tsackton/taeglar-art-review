@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T19:09:48.919Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "fix background, should be a courtyard of a desert caravanserai",
+  "id": "b0520346-ed49-4554-bff9-d85b9c458487",
+  "itemId": "catalog-2352",
+  "mode": "edits",
+  "parents": [
+    "644b2db2-0cb2-4baf-a168-eb1bdc19e63a"
+  ],
+  "sourceSha256": "e7793bc695f7ada40a649983245f7277f3c46db1f7828c9bb4d2218c8ca81f8f",
+  "type": "choice",
+  "variantSha256": "6d795f3b1cf21c54a8c3364627ece0f42d5302426051cf3f882546aa7f7aa629"
+}

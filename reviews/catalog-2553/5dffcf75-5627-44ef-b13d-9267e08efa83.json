@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T19:11:56.457Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "remove buildings from background, add a bit more scrub life",
+  "id": "5dffcf75-5627-44ef-b13d-9267e08efa83",
+  "itemId": "catalog-2553",
+  "mode": "edits",
+  "parents": [
+    "7ab3e495-f9ce-444b-9298-bb3dae798da5"
+  ],
+  "sourceSha256": "c69bd17ff4b58112f6b900f079d1fdbb6a8f999529cad6aa63ec7da7083594cb",
+  "type": "choice",
+  "variantSha256": "a91acf1305ec8d34ca92c728d1fad026be0f3480fcd3235983c17d375b8d9d59"
+}
