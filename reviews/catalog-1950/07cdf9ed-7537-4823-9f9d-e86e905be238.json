@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:57:25.001Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "remove weird metal circles in fur neck piece. clean up hair jewelry to be symmetric. make background a hint of a pine forest",
+  "id": "07cdf9ed-7537-4823-9f9d-e86e905be238",
+  "itemId": "catalog-1950",
+  "mode": "edits",
+  "parents": [
+    "20947684-516a-4bfd-918b-c6e54f92ae5e"
+  ],
+  "sourceSha256": "36bdae09b333fd106fb0e00d0f0cde02cf69c6042630c8bcaa4817509f5faf11",
+  "type": "choice",
+  "variantSha256": "cfffb2b705fb1f480010c6897a5d6fd0bb45609cb68228c4e8e703e4725200b0"
+}

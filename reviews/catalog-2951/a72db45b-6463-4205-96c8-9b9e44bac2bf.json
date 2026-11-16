@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:59:12.539Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "fix clothes to be more normal medieval riding gear. tone down saturation just a tiny tiny bit.",
+  "id": "a72db45b-6463-4205-96c8-9b9e44bac2bf",
+  "itemId": "catalog-2951",
+  "mode": "edits",
+  "parents": [
+    "8f0e01c6-45eb-4594-8c14-85c0d2117311"
+  ],
+  "sourceSha256": "d438f0d4d23402f0c767c726991736f2efc1b77ee9051f1a0c8ff9641df9a3de",
+  "type": "choice",
+  "variantSha256": "c45bef4c6d38d65b951d744e51976de0b10eae584bac71cce28999252d76039d"
+}

@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T19:03:46.617Z",
+  "author": "tim",
+  "choice": "original",
+  "editNote": "reapply the standard portrait style with fine painterly brush strokes while keeping the hair and eye colors exact, the hair should have a bluish silver sheen and the eyes should look too bright and amber and a little magical. background should hint at an open rocky desert",
+  "id": "98c29f6d-6b5e-4016-9e48-9f9306a32456",
+  "itemId": "catalog-1776",
+  "mode": "edits",
+  "parents": [
+    "ae1e15ce-e6cb-4dfa-a2ba-a631fd01b838"
+  ],
+  "sourceSha256": "42eba75fa4063f730a910073edb45182d551a5a4c54ff81bdc3193f26d24cc98",
+  "type": "choice",
+  "variantSha256": null
+}
