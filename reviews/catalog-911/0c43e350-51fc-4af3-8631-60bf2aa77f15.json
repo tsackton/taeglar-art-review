@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:52:00.165Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "remove the castle in the background and remove the stone bridge",
+  "id": "0c43e350-51fc-4af3-8631-60bf2aa77f15",
+  "itemId": "catalog-911",
+  "mode": "edits",
+  "parents": [
+    "dcd71446-29fb-4dd1-a43f-3f521530af6a"
+  ],
+  "sourceSha256": "f4b6c4946e730ce5c8c2548bbf730a97ef30325e37d135ba26ce06bc14f44c3b",
+  "type": "choice",
+  "variantSha256": "5cb0f4849056bdc1b2396f822d9adb94752c03625fb150c39b1fd2e7ff7645bf"
+}

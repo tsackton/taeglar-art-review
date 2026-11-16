@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:50:29.057Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "replace background with simple sun dappled wall - remove the vine and the door and the pot etc",
+  "id": "01904d16-b8c7-438d-8668-7b47d4f00528",
+  "itemId": "catalog-1980",
+  "mode": "edits",
+  "parents": [
+    "64ae8d55-c897-4016-9097-d813694ed4fe"
+  ],
+  "sourceSha256": "5a0fc1dfb71ac89bde5206142f3723140830376cbd0e5eef3ed904306b66056d",
+  "type": "choice",
+  "variantSha256": "b0b875b2ce7dc7feee6bc0521e4e87c79677e261d41d821f78d525f52fe3ac81"
+}

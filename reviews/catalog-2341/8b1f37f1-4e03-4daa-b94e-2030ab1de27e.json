@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T18:48:46.239Z",
+  "author": "tim",
+  "choice": "plain-faithful",
+  "editNote": "fix hood so that it connects to clothes not face. make the background darker and give it a bit of a painterly wash",
+  "id": "8b1f37f1-4e03-4daa-b94e-2030ab1de27e",
+  "itemId": "catalog-2341",
+  "mode": "edits",
+  "parents": [
+    "da4bd84d-0b26-468c-b9cf-a930e49c7aa1"
+  ],
+  "sourceSha256": "253d2ddb71b876599d812a8643d5431d9e35f7bdcb4fb703c1f41bb410a174d6",
+  "type": "choice",
+  "variantSha256": "6133d406d27e6dedccbd825937dd80d5caf0e6183d02ddd1019c64239374df8f"
+}
