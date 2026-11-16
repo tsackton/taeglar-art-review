@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-16T21:17:44.901Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "revise light to be just past sunset instead of during sunset",
+  "id": "0f836a2e-439a-4abf-ab6f-cf90755f383f",
+  "itemId": "catalog-1742",
+  "mode": "edits",
+  "parents": [
+    "5ae8f6bb-8629-4242-a376-86bf1977fbf5"
+  ],
+  "sourceSha256": "d14402f4639510ba96e6b43434419e87c18809721df393ada4987b56c9c56562",
+  "type": "choice",
+  "variantSha256": "bc10730b9ae5cb1c5b6dbc1ec325149db04abdac8d72a973d7fb4f1e111c255c"
+}
