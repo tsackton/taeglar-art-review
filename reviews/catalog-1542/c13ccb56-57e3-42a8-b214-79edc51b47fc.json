@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-17T21:53:52.285Z",
+  "author": "tim",
+  "choice": "dark-corrected",
+  "editNote": "make mirror surface more of a sheen, make the etching more ethereal",
+  "id": "c13ccb56-57e3-42a8-b214-79edc51b47fc",
+  "itemId": "catalog-1542",
+  "mode": "edits",
+  "parents": [
+    "cee7d8b2-67b4-417a-916f-4803011bdfcf"
+  ],
+  "sourceSha256": "cf550596d23e41eaa1c0ec10a568fffebaa69cebd637d84d1839da8844435f61",
+  "type": "choice",
+  "variantSha256": "159ba61e8fced1947db80b36baba7fdbf966bd3372bdb21e5c91d5b23e759a56"
+}
