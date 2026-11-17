@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:19:39.226Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "remove bracelets and the lion flag in background",
+  "id": "0ecb5092-45f3-4a65-a0ea-a69d06f6e81f",
+  "itemId": "catalog-1880",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "1c0116d3ece245eb042bfe4472596d48465398b49f016e0bb43f6955d2f11d84",
+  "type": "choice",
+  "variantSha256": "a6aa4d1b387cd316029a4a84e725260a29c81a6740eacecfd0d4f32871dc5caf"
+}

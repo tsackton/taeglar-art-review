@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:16:08.661Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "remove the hanging lamp; show telescope and len parts on desk;",
+  "id": "7da439c9-30a3-49c3-91bd-32e9b74f876c",
+  "itemId": "catalog-1759",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "4e62cc81c504e5e8b851cab1c764ee4e68eb15ee9643f1ebc75fb7b89a511521",
+  "type": "choice",
+  "variantSha256": "27461e44367a2e575bb1eb194e735c230be8ead70ffdc6a0cc1c5c91d3aa1e8a"
+}

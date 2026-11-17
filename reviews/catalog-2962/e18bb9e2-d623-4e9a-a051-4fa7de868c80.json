@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:23:48.558Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "fix the sword hand --- the sword is not really being held, it just weirdly connects",
+  "id": "e18bb9e2-d623-4e9a-a051-4fa7de868c80",
+  "itemId": "catalog-2962",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "e21a9ed846c3fe48e4c46bcb328642296c8fed4ea5e313fbf68655dd2d9800a8",
+  "type": "choice",
+  "variantSha256": "f0a078e097269a62c0866d2613ccd32145fe7987282dadc5fc61611baf8f589b"
+}

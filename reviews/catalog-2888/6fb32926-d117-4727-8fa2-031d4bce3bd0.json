@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:26:35.669Z",
+  "author": "Mike",
+  "choice": "setting-faithful",
+  "editNote": "make ears just a little bit less dramtically pointy",
+  "id": "6fb32926-d117-4727-8fa2-031d4bce3bd0",
+  "itemId": "catalog-2888",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "1dc2327c8c68d0255e141f0eebc95fa8758ca98a83f912630934e783e1c374f0",
+  "type": "choice",
+  "variantSha256": "274e0d995cfcef57fe2e74a766d072c0be683edfde1ebdf2d1c30648f0c0c5a4"
+}

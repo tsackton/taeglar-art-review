@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:15:24.693Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "update background image to be a medieval street with a small market",
+  "id": "b1aa838f-35d9-47be-bfe4-28b0bfd248b6",
+  "itemId": "catalog-1800",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "021a1105919cc43285d632f7f94969516442332bedb6f025571b25549ef1b62a",
+  "type": "choice",
+  "variantSha256": "d559828acdea19adb7f32e10c58887f75b67defbcf666f6aeef8e083307fe925"
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:19:03.332Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "fix hands to show a fist punching/resting into her other hand, i.e. as if she is making a threating gesture",
+  "id": "2244b583-287a-47ef-89c6-e268e8932d52",
+  "itemId": "catalog-2306",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "640216049de5c9cde70a73efd3794dbba39a661f6d8b0e5bf258070c81affafe",
+  "type": "choice",
+  "variantSha256": "db38e95adc31709e259138904bff9b25ee6d0081d6d7f1e2b3b721695a861c89"
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T01:26:14.147Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "remove jewelry",
+  "id": "52fda77d-0d98-4cdb-b56b-c33d02715148",
+  "itemId": "catalog-1942",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "09298f605f08d8f706a3f6aa60899a2e626e0bab258d44cd3263bf8678f8ccf6",
+  "type": "choice",
+  "variantSha256": "cdef4c7ef9d48a07765c814d32b7df92689603096e26d8344f81ddb2bf4e84c8"
+}
