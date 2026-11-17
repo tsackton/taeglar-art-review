@@ -41,12 +41,22 @@
    <button type="button" id="viewer-next" aria-label="Next image" title="Next image (→)">→</button>
    <button type="button" id="viewer-zoom" aria-pressed="false">Actual size</button>
    <button type="button" id="viewer-pick">Use this version</button>
+   <button type="button" id="viewer-edits">Use with edits</button>
    <button type="button" id="viewer-close" autofocus title="Close (Esc)">Close</button>
   </div>
  </div>
  <div id="viewer-area"><div class="viewer-canvas"><img id="viewer-image" alt=""></div>
   <p id="viewer-error" hidden>This image could not be displayed. <a id="viewer-original" target="_blank" rel="noopener">Open image file</a></p>
  </div>
+</dialog>
+<dialog id="edit-dialog" aria-labelledby="edit-heading" aria-describedby="edit-target">
+ <form id="edit-form">
+  <h2 id="edit-heading">Use with edits</h2>
+  <p id="edit-target"></p>
+  <label class="review-field">Edit instructions<textarea id="edit-note" rows="4" maxlength="32000" autofocus></textarea></label>
+  <p id="edit-error" class="review-message" role="alert"></p>
+  <div class="review-buttons"><button type="submit" class="primary">Save decision</button><button type="button" id="cancel-edits">Cancel</button></div>
+ </form>
 </dialog>
 <script src="review-log.js"></script><script src="review-editor.js"></script><script src="review.js"></script>
 </body>

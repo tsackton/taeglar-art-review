@@ -41,7 +41,8 @@ async function startGallery() {
   const folderParent = path => path.includes("/") ? path.slice(0,path.lastIndexOf("/")) : "";
   const folderLabel = path => path === unlinked ? "Unlinked images" : path || "All folders";
   const rank = {ready:0, pending:1, missing:2};
-  items.sort((a,b) => rank[setStatus(a)] - rank[setStatus(b)] || a.label.localeCompare(b.label) || a.id.localeCompare(b.id));
+  const galleryOrder = (a,b) => rank[setStatus(a)] - rank[setStatus(b)] || a.label.localeCompare(b.label) || a.id.localeCompare(b.id);
+  items.sort(galleryOrder);
   const noteFolders = path => {
     const parts = path.split("/").slice(0,-1);
     return parts.length ? parts.map((_,i) => parts.slice(0,i+1).join("/")) : ["(vault root)"];
@@ -100,7 +101,10 @@ async function startGallery() {
     let author = byId("reviewerName").value.trim();
     if (!author) {
       author = (window.prompt("What name should appear beside your reviews?") || "").trim().slice(0,80);
-      if (!author) return false;
+      if (!author) {
+        notice("Enter a reviewer name to save your change.");
+        return false;
+      }
       byId("reviewerName").value = author;
     }
     try {
@@ -114,7 +118,7 @@ async function startGallery() {
         log.comment(item.id,action.text,author,{requestId:action.requestId,proposalId:action.proposalId});
       }
       notice("Saved in this browser. Sync to share your changes.");
-      filter();
+      filter({keepCurrent:true});
       return true;
     } catch (error) {
       notice(error.message);
@@ -228,7 +232,7 @@ async function startGallery() {
     select.value = people.has(previous) ? previous : "";
     return select.value;
   }
-  function filter() {
+  function filter({keepCurrent = false} = {}) {
     const val = id=>byId(id).value.trim().toLowerCase();
     const kind = val("kind"), pick = val("decision"), text = val("query"), note = val("note");
     const review = byId("reviewFilter").value;
@@ -258,9 +262,12 @@ async function startGallery() {
         return true;
       });
     });
-    let pos = matches.findIndex(i=>i.id === active);
-    if (pos < 0) active = matches[0]?.id || "";
-    else page = Math.floor(pos/pageSize);
+    const pos = matches.findIndex(i=>i.id === active);
+    if (pos >= 0) page = Math.floor(pos/pageSize);
+    else if (!keepCurrent || !index.has(active)) {
+      active = matches[0]?.id || "";
+      page = 0;
+    }
     page = Math.min(page,Math.max(0,Math.ceil(matches.length/pageSize)-1));
     render();
   }
@@ -313,6 +320,7 @@ async function startGallery() {
     const key = thumb.dataset.key;
     const pick = byId("viewer-pick");
     pick.disabled = decision(item)?.choice === key;
+    byId("viewer-edits").hidden = pick.disabled;
     pick.textContent = pick.disabled ? "Selected" : key === "original" ? "Keep original" : "Use this version";
     image.alt = thumb.querySelector("img").alt;
     byId("viewer-caption").textContent = image.alt + " · " + (position + 1) + " of " + thumbnails.length;
@@ -343,6 +351,11 @@ async function startGallery() {
     viewer.close();
     save(index.get(thumb.dataset.item),thumb.dataset.key);
   };
+  byId("viewer-edits").onclick = () => {
+    const thumb = thumbnails[position];
+    viewer.close();
+    openEditDialog(index.get(thumb.dataset.item),thumb.dataset.key);
+  };
   image.addEventListener("error", () => {
     if (!viewer.open || image.naturalWidth || !image.complete) return;
     image.hidden = true;
@@ -359,8 +372,31 @@ async function startGallery() {
     image.removeAttribute("src");
     const target = openingThumbnail.isConnected ? openingThumbnail :
       byId("detail").querySelector(".chosen .art, .art");
-    target?.focus({preventScroll:true});
+    if (!editDialog.open) target?.focus({preventScroll:true});
   });
+  const editDialog = byId("edit-dialog");
+  function openEditDialog(item,key) {
+    const state = log.state(item.id);
+    const name = key === "original" ? "Original" : labelFor(item,key);
+    byId("edit-target").textContent = item.label + " · " + name;
+    const input = byId("edit-note");
+    input.value = state.choice === key && state.mode === "edits" ? state.editNote : "";
+    byId("edit-error").textContent = "";
+    const expectedVariantSha256 = reviewedVariant(item,key)?.sha256 || null;
+    byId("edit-form").onsubmit = event => {
+      event.preventDefault();
+      if (writeAction(item,{type:"choice",choice:key,mode:"edits",editNote:input.value.trim(),
+          expectedProposalId:state.proposalId,expectedVariantSha256})) {
+        editDialog.close();
+        byId("detail").querySelector(".chosen .art")?.focus({preventScroll:true});
+      } else {
+        byId("edit-error").textContent = byId("notice").textContent;
+      }
+    };
+    editDialog.showModal();
+    input.focus();
+  }
+  byId("cancel-edits").onclick = () => editDialog.close();
   function card(item, key, variant) {
     const original = key === "original";
     const selected = decision(item)?.choice === key;
@@ -381,8 +417,10 @@ async function startGallery() {
       if (selected) {
         const b = node("button","primary","✓ Selected");
         b.disabled = true; cap.append(b);
-      } else if (original || setStatus(item) === "ready") cap.append(action(original ? "Keep original" : "Use this version",()=>save(item,key)));
-      else cap.append(node("small","","Awaiting set review"));
+      } else {
+        cap.append(action(original ? "Keep original" : "Use this version",()=>save(item,key)),
+                   action("Use with edits",()=>openEditDialog(item,key),"text"));
+      }
     } else {
       const generated = outputs[item.id]?.generatedKeys?.includes(key);
       fig.append(node("div","pending-slot",generated ? "Generated · awaiting review" : "Awaiting image"));
@@ -404,10 +442,20 @@ async function startGallery() {
       ? prepared + " of " + treatments[item.kind].length + " generated · awaiting review" : statuses[status];
     top.append(node("span","status " + status,kinds[item.kind] + " · " + statusLabel));
     const nav = node("div","detail-nav");
-    const prev = action("←",()=>select(matches[pos-1])), next = action("→",()=>select(matches[pos+1]));
-    prev.setAttribute("aria-label","Previous illustration"); next.setAttribute("aria-label","Next illustration");
-    prev.disabled = pos <= 0; next.disabled = pos+1 >= matches.length;
-    nav.append(prev,node("span","",(pos+1) + " of " + matches.length.toLocaleString()),next); top.append(nav);
+    if (pos >= 0) {
+      const prev = action("←",()=>select(matches[pos-1])), next = action("→",()=>select(matches[pos+1]));
+      prev.setAttribute("aria-label","Previous illustration"); next.setAttribute("aria-label","Next illustration");
+      prev.disabled = pos === 0; next.disabled = pos+1 >= matches.length;
+      nav.append(prev,node("span","",(pos+1) + " of " + matches.length.toLocaleString()),next);
+    } else {
+      nav.append(node("span","",matches.length ? "Outside current filters" : "No matching images left"));
+      if (matches.length) {
+        const next = matches.find(candidate => galleryOrder(candidate,item) > 0) || matches[0];
+        const label = byId("decision").value === "open" ? "Next open image" : "Next matching image";
+        nav.append(action(label,()=>select(next),"primary"));
+      }
+    }
+    top.append(nav);
     article.append(top,node("h2","",item.label),node("p","path",item.vaultPath || item.source));
     if (item.notes.length) {
       const details=node("details","notes"), ul=node("ul");
@@ -472,7 +520,7 @@ async function startGallery() {
       log.refresh();
       const count = log.merge(data.events);
       notice("Imported " + count + " new history entries. Sync to share them.");
-      filter();
+      filter({keepCurrent:true});
     } catch(error) { notice(error.message || "Could not import decisions."); }
     byId("file").value="";
   }
@@ -512,7 +560,7 @@ async function startGallery() {
     } finally {
       syncInProgress = false;
       byId("sync").disabled = byId("pull").disabled = false;
-      filter();
+      filter({keepCurrent:true});
     }
   }
   byId("sync").onclick = () => syncReviews(false);
@@ -524,7 +572,7 @@ async function startGallery() {
     if (event.key === reviewerKey) byId("reviewerName").value = event.newValue || "";
     else if (event.key === null || event.key.startsWith(log.storagePrefix)) {
       clearTimeout(storageTimer);
-      storageTimer = setTimeout(()=>{log.refresh();filter();},100);
+      storageTimer = setTimeout(()=>{log.refresh();filter({keepCurrent:true});},100);
     }
   });
   initFilters();

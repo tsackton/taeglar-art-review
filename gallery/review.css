@@ -45,3 +45,10 @@ body:has(#viewer[open]){overflow:hidden}
 .top,.actions{flex-wrap:wrap}
 .reviewer-name{display:flex;align-items:center;gap:6px;color:inherit;margin:0}
 .reviewer-name input{width:9em;margin:0;color:var(--ink)}
+
+#edit-dialog{width:min(28rem,calc(100% - 2rem));border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);padding:20px}
+#edit-dialog::backdrop{background:rgb(20 30 24 / .5)}
+#edit-heading{font-size:28px;margin:0}
+#edit-target{color:var(--muted);overflow-wrap:anywhere}
+.card figcaption .text{display:block;margin-top:4px}
+.detail-top,.detail-nav{flex-wrap:wrap}

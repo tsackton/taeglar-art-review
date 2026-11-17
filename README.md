@@ -8,7 +8,7 @@ The launcher saves the folder path in a local file named `.image-source` inside 
 
 ## Review together
 
-Enter your name, open an illustration, and choose a version. **Use with edits** lets you describe a fix. **Request review** asks the other reviewer to check your choice. Use the **Needs review** filter to find requests and approve or reject them.
+Enter your name, open an illustration, and choose a version. Choose **Use with edits** on a version to save it with instructions. When a decision takes an illustration out of the **Open** list, it stays on screen for notes and review. Choose **Next open image** when you’re ready to move on. **Request review** asks the other reviewer to check your choice. Use the **Needs review** filter to find requests and approve or reject them.
 
 Click **Sync** to share your changes and get the other reviewer’s decisions. For sync, install GitHub CLI and sign in once with `gh auth login` using an account with write access to this repository. Synced notes and decisions are public. [GitHub CLI](https://cli.github.com/)
 
