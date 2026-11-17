@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-17T21:35:47.059Z",
+  "author": "tim",
+  "choice": "dark-faithful",
+  "editNote": "clean up the \"ground\" to remove reflections and make the bottom of the background a little more neutral, keep the shimmer above",
+  "id": "4489b588-331d-453a-809c-0d9b033bbc44",
+  "itemId": "catalog-2387",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "9f44c98eec49ad25143ddaaa3da4d7d4f99cfc42d22cfdbeaf5e91d11a1a3374",
+  "type": "choice",
+  "variantSha256": "a124573715f62ffcdbffb55d1fd27ccc185f6097d525cad1b2846e7162bf7efa"
+}
