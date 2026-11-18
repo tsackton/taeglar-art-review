@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-18T01:08:37.607Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "make the fortress read a little more as something that could be occupied and used while still maintaining the brutalism vibe",
+  "id": "139b87f0-4390-4633-9fc1-74140e72cf0e",
+  "itemId": "catalog-1124",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "53e508bd0c53ca5661908adc1d443d7518ed9813692f7c00107e8f12d5ee9420",
+  "type": "choice",
+  "variantSha256": "349e3b2820af89b002acd53b5eda3b195e18ea40d85894738507fd056511c8e7"
+}
