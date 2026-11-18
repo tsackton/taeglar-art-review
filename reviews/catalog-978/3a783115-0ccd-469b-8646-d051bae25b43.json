@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-18T01:00:11.576Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "remove the weird stone structures in the far background",
+  "id": "3a783115-0ccd-469b-8646-d051bae25b43",
+  "itemId": "catalog-978",
+  "mode": "edits",
+  "parents": [
+    "e370a6c7-d911-44de-af72-81bd044555e7"
+  ],
+  "sourceSha256": "15302523d6cf5c044d8ef887df4245b1c5cb65d1a61f9aa88aec9b6fd24f31e7",
+  "type": "choice",
+  "variantSha256": "c1f4eb91c667d21d0c2ffd2ea7fd9a78145726dc1cce0cded69e094c3743cab6"
+}

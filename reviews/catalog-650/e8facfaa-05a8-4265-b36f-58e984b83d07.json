@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-18T00:59:24.158Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "the bottom ships look a bit weird fix them, especially the one to the bottom right that is too close to land",
+  "id": "e8facfaa-05a8-4265-b36f-58e984b83d07",
+  "itemId": "catalog-650",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "72e9a5d9ac688956e7ca05729585ee4a9699203a0d0ddc791e7099242d53ffc2",
+  "type": "choice",
+  "variantSha256": "70e5a2369c3b5b273fb132d871e311f3fa595f538b0ef1ef3c10176867c5233c"
+}

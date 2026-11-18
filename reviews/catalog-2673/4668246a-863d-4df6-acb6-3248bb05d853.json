@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-18T00:55:08.893Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "fix the houses so that the windows look like actual windows with translucent panes of paper or similar blocking the insides with light shining out",
+  "id": "4668246a-863d-4df6-acb6-3248bb05d853",
+  "itemId": "catalog-2673",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "b1411e726301e98ffc19d02593c986772bf472660908a894bee8287238c6cff2",
+  "type": "choice",
+  "variantSha256": "ac706d0fd8b1d885a1ad9af56b6bcef7b33238864308d63d739c56fccc0ae482"
+}

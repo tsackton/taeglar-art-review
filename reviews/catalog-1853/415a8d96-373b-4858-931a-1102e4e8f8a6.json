@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-18T01:06:43.689Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "reduce the patterned repetitiveness of how the rocks are sketched. slightly more brushstrokes",
+  "id": "415a8d96-373b-4858-931a-1102e4e8f8a6",
+  "itemId": "catalog-1853",
+  "mode": "edits",
+  "parents": [
+    "12d6c4f4-c2e5-48c9-870a-a2dee5d3cd8c"
+  ],
+  "sourceSha256": "e4b92adc726e0f2c8c79a36b1fd2ea65f13fb2f85d5805760099a9f792c7fbfd",
+  "type": "choice",
+  "variantSha256": "5a67a65eac0b6085a919736abe707b220b0797d3f34987913ca7332673dc8af3"
+}

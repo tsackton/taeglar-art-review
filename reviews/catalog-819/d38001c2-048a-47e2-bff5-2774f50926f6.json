@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-18T01:05:40.223Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "fix the boat to be properly a medieval river boat. fix the geometry of the houses to make sense",
+  "id": "d38001c2-048a-47e2-bff5-2774f50926f6",
+  "itemId": "catalog-819",
+  "mode": "edits",
+  "parents": [
+    "249f1cf6-c9bf-41ba-8296-742fa550f3a9"
+  ],
+  "sourceSha256": "91fe48c40bcfdb32ae8237bdf2ecd12d1f0deae27ef59864c666787946bd27d3",
+  "type": "choice",
+  "variantSha256": "c19c7c81afee415587c5800e9ae86c511685ca7eb82a7cf5dddf32c48ba022dc"
+}
