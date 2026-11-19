@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-19T02:24:49.259Z",
+  "author": "Mike",
+  "choice": "plain-faithful",
+  "editNote": "zoom out to show his upper torso; he is a well-muscled dwarf",
+  "id": "1a1c3287-5287-4a8b-97c7-b3cbeffa830d",
+  "itemId": "catalog-727",
+  "mode": "edits",
+  "parents": [
+    "8c2a33b1-9c30-4db8-b74c-fb2cf5a97a8c"
+  ],
+  "sourceSha256": "9fd14a73addcb00493ef2f6100f6ab321df5b11a60d8016752fe1a01d9bcb396",
+  "type": "choice",
+  "variantSha256": "3f67ef8db8741a5d064ba16d63bfa455938590ee14c3809b3f7b63c02be53007"
+}

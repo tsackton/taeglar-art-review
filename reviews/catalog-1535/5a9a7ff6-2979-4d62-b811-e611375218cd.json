@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-19T02:26:08.455Z",
+  "author": "Mike",
+  "choice": "setting-corrected",
+  "editNote": "he shouldn't be holding the dagger by the blade",
+  "id": "5a9a7ff6-2979-4d62-b811-e611375218cd",
+  "itemId": "catalog-1535",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "e1e84064695f9032d510356688d2b0caf1ef5e271da7fe345c9963c8bbba75ce",
+  "type": "choice",
+  "variantSha256": "8985cfe2bc1501e4d014b81494e8a2d9fea93d9f3c5b35c7544111de6b65720b"
+}
