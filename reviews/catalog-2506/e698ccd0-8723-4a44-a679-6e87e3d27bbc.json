@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-19T02:15:22.629Z",
+  "author": "Mike",
+  "choice": "setting-faithful",
+  "editNote": "the foreground is good, but the background shouldn't have other muscians in it, just a pub crowd",
+  "id": "e698ccd0-8723-4a44-a679-6e87e3d27bbc",
+  "itemId": "catalog-2506",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "74441d9edd0979bac850c62768e97074ddd996321aa34c3dcbe30c0fdda67903",
+  "type": "choice",
+  "variantSha256": "6b135c619c45c8271a595d8b56554548073c405b95f1b8a14b4e25fe56d227e7"
+}

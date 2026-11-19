@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-19T02:11:58.532Z",
+  "author": "Mike",
+  "choice": "dark-faithful",
+  "editNote": "zoom out a bit to show more of the blade",
+  "id": "c9a91d54-7dfd-4105-b8d2-df5b8b1d8143",
+  "itemId": "catalog-2641",
+  "mode": "edits",
+  "parents": [
+    "2838b324-e2b7-449f-a3a6-5a683eff6f20"
+  ],
+  "sourceSha256": "8ef00c75e0a7e6388598031a60df62bebab40ef79a10963032e1591acefabb1d",
+  "type": "choice",
+  "variantSha256": "1ce10b11527dd73aabdac772565d6895a26b1ba061deb9161b1b5b7a18cb56aa"
+}

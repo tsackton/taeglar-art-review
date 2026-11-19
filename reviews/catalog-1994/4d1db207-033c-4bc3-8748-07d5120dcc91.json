@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-19T02:13:08.245Z",
+  "author": "Mike",
+  "choice": "plain-corrected",
+  "editNote": "the scar should be slightly less recent and bloody; it should be a large scar with a small bit of oozing blood but mostly scabbed and healed over",
+  "id": "4d1db207-033c-4bc3-8748-07d5120dcc91",
+  "itemId": "catalog-1994",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "a10e4a712aa533960398cdb3a720cfbc2c125ef3525f0e090dd395c0879e680b",
+  "type": "choice",
+  "variantSha256": "ec57cd41c976e55950bd35c8eeef82d97e687e590d78f25bafbc471ddb7024cf"
+}
