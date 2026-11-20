@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-20T14:06:07.355Z",
+  "author": "tim",
+  "choice": "original",
+  "editNote": "",
+  "id": "9bbe0538-f503-460d-a7ff-14bbb8c67582",
+  "itemId": "catalog-2298",
+  "mode": "use",
+  "parents": [
+    "60bc23b6-4577-4e50-93b9-a625e7b3b02c"
+  ],
+  "sourceSha256": "ad49c8f78777eca491d56b63b19f56be1151577fe1c9425c18e89b094d071188",
+  "type": "choice",
+  "variantSha256": null
+}

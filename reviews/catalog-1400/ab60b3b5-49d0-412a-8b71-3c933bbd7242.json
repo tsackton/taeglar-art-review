@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:05:38.817Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "fix people that are merging with objects",
+  "id": "ab60b3b5-49d0-412a-8b71-3c933bbd7242",
+  "itemId": "catalog-1400",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "3105361ea8154b711467a83cfd88de4613162467000c6e81101277e976755315",
+  "type": "choice",
+  "variantSha256": "3e37c09e3a2085011994ac6767fcdfdb3546d888f81f20d85256228ac77966c2"
+}

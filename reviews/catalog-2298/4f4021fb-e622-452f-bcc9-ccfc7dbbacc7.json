@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-20T14:06:58.865Z",
+  "author": "tim",
+  "choice": "original",
+  "editNote": "keep a painterly loose brushed image, don't aim for realism, but clean up a few of the messier and more obviously artifactual details",
+  "id": "4f4021fb-e622-452f-bcc9-ccfc7dbbacc7",
+  "itemId": "catalog-2298",
+  "mode": "edits",
+  "parents": [
+    "9bbe0538-f503-460d-a7ff-14bbb8c67582"
+  ],
+  "sourceSha256": "ad49c8f78777eca491d56b63b19f56be1151577fe1c9425c18e89b094d071188",
+  "type": "choice",
+  "variantSha256": null
+}

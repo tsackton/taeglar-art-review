@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:56:35.619Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "fix people that are blending into buildings",
+  "id": "2bb8781a-16f6-4d6e-a1f9-49cead6b19c1",
+  "itemId": "catalog-431",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "fa255e1fe243a2e10d5fa2af6e55509f497680ce506643c7abc9a337c6a6afeb",
+  "type": "choice",
+  "variantSha256": "2348dd36c1ccfef54758793d154c247f478f2ee660b75f5398056f3201ebef6e"
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:59:37.268Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "fix cows, make building look a bit neater but keep bright rainbow. design should be kind of Egyptian blended with classical arabic",
+  "id": "438e9abf-4439-4f3a-a23c-22bf74f843d5",
+  "itemId": "catalog-784",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "08216e89a46237327c426f2e770b56715ab254881ea01039bc26d1484e6340a4",
+  "type": "choice",
+  "variantSha256": "d6fee718f4005415ed8ad06ed7b92cd8ef367fb984a7f894db7d65eac6abadcf"
+}

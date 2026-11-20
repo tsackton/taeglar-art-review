@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:55:28.280Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "some of the background people and horses are wrong, sloppy, or bad. clean this up.",
+  "id": "a7de5c3b-d219-4ce0-953b-e0ff62b70ee4",
+  "itemId": "catalog-2929",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "0f29412e631658e0b3eb437c2b256fdb88e46fd6f8209520d7b97f21cc038415",
+  "type": "choice",
+  "variantSha256": "969b941ffc17e7929947263a54155995a11f86db3c8f26bc544a9cfe8d382af4"
+}

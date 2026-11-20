@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:01:42.307Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "buildings should be medieval. a little more cinematic matte painting/less photographical",
+  "id": "d3b2b9e0-a881-4bbd-8f35-c3df3569e94c",
+  "itemId": "catalog-1494",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "009dd57840f421faf3e1f6db4fb00548749dff7514b9e45936da1430f779a22e",
+  "type": "choice",
+  "variantSha256": "ef1b2a0831a4be2935f8c137e1a769bb1ddbebd73920b769feb003eff1086c0b"
+}

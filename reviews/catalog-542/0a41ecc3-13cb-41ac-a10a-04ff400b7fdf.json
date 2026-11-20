@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:01:13.198Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "no sea floor",
+  "id": "0a41ecc3-13cb-41ac-a10a-04ff400b7fdf",
+  "itemId": "catalog-542",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "16ff3702b3e8fcce97aa1958b4f37c8cc4b9c67b89a5ac6a055addbc28cd294b",
+  "type": "choice",
+  "variantSha256": "213fcd28adb448a8ce9f7034226d70508fdf839b9a6b9ff8c10ad6780bedaea1"
+}
