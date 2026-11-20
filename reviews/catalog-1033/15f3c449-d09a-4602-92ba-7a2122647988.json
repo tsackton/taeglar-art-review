@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:35:07.041Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "clean up face to have one tattoo on forehead only",
+  "id": "15f3c449-d09a-4602-92ba-7a2122647988",
+  "itemId": "catalog-1033",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "b3bf7d70b6a072e3550e98563cf67084f560e39d8b73bdb713227918ce420469",
+  "type": "choice",
+  "variantSha256": "de7c3a74e38897a9929af02739196646cc80a8b3ac3132fb9822ccab38bc9600"
+}
