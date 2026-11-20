@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-20T18:19:26.267Z",
+  "author": "Mike",
+  "id": "485e68c0-e6f1-4167-95b1-23f8e8527587",
+  "itemId": "catalog-830",
+  "parents": [
+    "87202b87-5c3b-477a-803e-5e64683dc1b9"
+  ],
+  "proposalId": "536eb203-43d4-4c72-873e-7e49bd2eb21e",
+  "requestId": "87202b87-5c3b-477a-803e-5e64683dc1b9",
+  "sourceSha256": "37299edce0a92fc3f6165c633a47c19e44d3981ac7f76cca0d942b56d3047cc9",
+  "status": "approved",
+  "text": "",
+  "type": "review"
+}
