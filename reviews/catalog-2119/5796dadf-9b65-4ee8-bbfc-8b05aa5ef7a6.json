@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:25:28.359Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "remove stone structure from background",
+  "id": "5796dadf-9b65-4ee8-bbfc-8b05aa5ef7a6",
+  "itemId": "catalog-2119",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "b965d6539c30679539d76fe7e1eed875fbc65ef398d8f31ce21cb53776556ae4",
+  "type": "choice",
+  "variantSha256": "fca535815155602fb9c9dd283ae48ec2bf82a25fdd450fb50822bd7ef1d4ddb1"
+}

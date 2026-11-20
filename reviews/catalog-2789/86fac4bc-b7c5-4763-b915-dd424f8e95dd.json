@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:27:27.777Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "zoom out 15%, remove buildings from background",
+  "id": "86fac4bc-b7c5-4763-b915-dd424f8e95dd",
+  "itemId": "catalog-2789",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "14c4f3f2e349acf6a7f1dbc42cc1e3f6b930de84276f0d9874b935fc6c77ffd1",
+  "type": "choice",
+  "variantSha256": "b7ffffca44ff8a75c61da5b65f3d0773e167bf5f14cdfe673a00ca9df5f52ff2"
+}

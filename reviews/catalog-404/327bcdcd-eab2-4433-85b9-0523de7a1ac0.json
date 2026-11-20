@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:24:15.483Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "fix background, it should suggest looking out into snow from a stone door but subtly",
+  "id": "327bcdcd-eab2-4433-85b9-0523de7a1ac0",
+  "itemId": "catalog-404",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "9d1902d5c788b852c77f395be04d891fb747fceb2f14d4dab8063dc4c09c63fe",
+  "type": "choice",
+  "variantSha256": "937a4d0a6b83dc0aafec02d837a12108cf492c7cca9302382f36dce2c46be1b6"
+}

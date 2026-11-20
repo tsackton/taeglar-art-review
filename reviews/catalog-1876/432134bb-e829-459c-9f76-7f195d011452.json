@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:21:57.904Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "remove weird pink flower on back. make hand look like a hand. fix tendril of plant hanging from hat",
+  "id": "432134bb-e829-459c-9f76-7f195d011452",
+  "itemId": "catalog-1876",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "7b4c96823e19540ceaeb6effd812fccc3269b1b3b27b3bc76602714680b79011",
+  "type": "choice",
+  "variantSha256": "b47aa118630d8b4e1cf23dc28767adb0ab2faf8f17fae22465d1f96e2a6f20e8"
+}
