@@ -10,9 +10,19 @@ async function startGallery() {
       throw Error(name + " does not contain valid JSON.");
     }
   }
-  const [inventory,outputs] = await Promise.all([readManifest("inventory.json"),readManifest("outputs.json")]);
-  const {items} = inventory || {};
-  if (!Array.isArray(items)) {
+  const editsView = new URLSearchParams(location.search).get("view") === "edits";
+  async function readReviewData(route) {
+    const response = await fetch(route);
+    if (!response.ok) throw Error("Could not load " + route + ". Restart the gallery launcher and reload.");
+    return response.json();
+  }
+  const [inventory,outputs,queueResult,eventsResult] = await Promise.all([
+    readManifest("inventory.json"), readManifest("outputs.json"),
+    readReviewData("/edit-queue").then(data => ({data}), error => ({error})),
+    readReviewData("/review-events").then(data => ({data}), error => ({error}))
+  ]);
+  const firstRound = inventory?.items;
+  if (!Array.isArray(firstRound)) {
     throw Error("inventory.json must include an items list.");
   }
   if (!outputs || Array.isArray(outputs) || typeof outputs !== "object") {
@@ -24,9 +34,26 @@ async function startGallery() {
     object: [["light-faithful","Light · faithful"],["light-corrected","Light · corrected"],["dark-faithful","Dark · faithful"],["dark-corrected","Dark · corrected"]],
     scene: [["faithful","Faithful"],["light-correction","Light corrections"],["full-correction","Full corrections"]]
   };
+  const candidates = [["candidate-a","Version A"],["candidate-b","Version B"],["candidate-c","Version C"]];
+  const firstRoundIndex = new Map(firstRound.map(item => [item.id,item]));
+  const edited = (queueResult.data?.sets || []).map(set => {
+    const parent = firstRoundIndex.get(set.id);
+    if (!parent || !/^[a-f0-9]{64}$/.test(set.key) || set.images.length !== 3 || set.hashes.length !== 3) {
+      throw Error("An edited set has invalid source or version information.");
+    }
+    const id = "edit-" + set.key;
+    outputs[id] = {reviewed:true, variants:candidates.map(([key],i) => ({
+      key, path:set.images[i], sha256:set.hashes[i]
+    }))};
+    return {...parent, id, sha256:set.baseHash, source:set.baseUrl, editSet:set};
+  });
+  const editedByParent = new Map(edited.map(item => [item.editSet.id,item]));
+  const allItems = [...firstRound,...edited];
+  const items = editsView ? edited : firstRound;
   const statuses = {ready:"Reviewed", pending:"Awaiting review", missing:"Awaiting images"};
   const reviewerKey = "art-review:taelgar-vault-restyle:reviewer";
-  const log = new ReviewLog(items,outputs);
+  const log = new ReviewLog(allItems,outputs);
+  if (eventsResult.data) log.merge(eventsResult.data);
   const pageSize = 20;
   const index = new Map(items.map(item => [item.id, item]));
   let active = decodeURIComponent(location.hash.slice(1));
@@ -63,6 +90,8 @@ async function startGallery() {
     byId("notice").hidden = !message;
   }
   function url(path) {
+    if (/^\/edited-images\/[\w-]+\/[\w-]+\/(?:round-\d+\/)?[123]\.png$/.test(path)) return path;
+    if (path.startsWith("/data/")) path = decodeURIComponent(path.slice(6));
     const parts = path.split("/");
     if (!["originals","thumbnails","variants"].includes(parts[0]) ||
         parts.some(part => !part || part === "." || part === ".." || part.includes("\\"))) {
@@ -89,15 +118,36 @@ async function startGallery() {
     const state = log.state(item.id);
     return state.choice ? state : null;
   }
+  function versions(item) { return item.editSet ? candidates : treatments[item.kind]; }
   function labelFor(item, key) {
-    return key === "original" ? "Keep original" : treatments[item.kind]?.find(([k]) => k === key)?.[1] || key;
+    if (key === "original") return item.editSet ? "Starting image" : "Original";
+    return versions(item)?.find(([k]) => k === key)?.[1] || key;
+  }
+  function keepLabel(item) { return item.editSet ? "Keep starting image" : "Keep original"; }
+  function currentRequest(item) {
+    if (!item.editSet) return true;
+    const state = log.state(item.editSet.id);
+    if (!state.history.some(event => event.type === "choice")) return true;
+    return state.mode === "edits" && !state.staleProposalIds.length && !state.conflicts.length &&
+      !state.reviewConflicts.length && !["requested","rejected"].includes(state.reviewStatus) &&
+      state.currentPicks.some(pick => pick.id === item.editSet.request);
   }
   function describeChoice(item, state) {
     if (state.conflicts.length) return "Conflicting decisions";
     if (!state.choice) return "Open";
-    return labelFor(item,state.choice) + (state.mode === "edits" ? " · Use with edits" : "");
+    return (state.choice === "original" ? keepLabel(item) : labelFor(item,state.choice)) + (state.mode === "edits" ? " · Use with edits" : "");
   }
   function writeAction(item, action) {
+    log.refresh();
+    if (!currentRequest(item)) {
+      notice("The first-round edit request has changed. Check its current decision.");
+      filter();
+      return false;
+    }
+    if (item.editSet && action.type === "choice" && action.mode === "edits" && !action.editNote?.trim()) {
+      notice("Enter the changes you want for this version.");
+      return false;
+    }
     let author = byId("reviewerName").value.trim();
     if (!author) {
       author = (window.prompt("What name should appear beside your reviews?") || "").trim().slice(0,80);
@@ -246,6 +296,7 @@ async function startGallery() {
     const requestedBy = updatePeopleFilter("requester",requesters);
     byId("requesterLabel").hidden = !review;
     matches = items.filter(item => {
+      if (!currentRequest(item)) return false;
       if (kind && kind !== item.kind) return false;
       if (selectedFolder === unlinked ? item.notes.length > 0 : selectedFolder && !foldersById.get(item.id).has(selectedFolder)) return false;
       if (note && !item.notes.some(n=>n.toLowerCase().includes(note))) return false;
@@ -264,7 +315,7 @@ async function startGallery() {
     });
     const pos = matches.findIndex(i=>i.id === active);
     if (pos >= 0) page = Math.floor(pos/pageSize);
-    else if (!keepCurrent || !index.has(active)) {
+    else if (!keepCurrent || !index.has(active) || !currentRequest(index.get(active))) {
       active = matches[0]?.id || "";
       page = 0;
     }
@@ -321,7 +372,7 @@ async function startGallery() {
     const pick = byId("viewer-pick");
     pick.disabled = decision(item)?.choice === key;
     byId("viewer-edits").hidden = pick.disabled;
-    pick.textContent = pick.disabled ? "Selected" : key === "original" ? "Keep original" : "Use this version";
+    pick.textContent = pick.disabled ? "Selected" : key === "original" ? keepLabel(item) : "Use this version";
     image.alt = thumb.querySelector("img").alt;
     byId("viewer-caption").textContent = image.alt + " · " + (position + 1) + " of " + thumbnails.length;
     byId("viewer-original").href = thumb.href;
@@ -377,7 +428,7 @@ async function startGallery() {
   const editDialog = byId("edit-dialog");
   function openEditDialog(item,key) {
     const state = log.state(item.id);
-    const name = key === "original" ? "Original" : labelFor(item,key);
+    const name = labelFor(item,key);
     byId("edit-target").textContent = item.label + " · " + name;
     const input = byId("edit-note");
     input.value = state.choice === key && state.mode === "edits" ? state.editNote : "";
@@ -400,7 +451,7 @@ async function startGallery() {
   function card(item, key, variant) {
     const original = key === "original";
     const selected = decision(item)?.choice === key;
-    const name = original ? "Original" : labelFor(item,key);
+    const name = labelFor(item,key);
     const fig = node("figure","card" + (selected ? " chosen" : "") + (original ? " original" : ""));
     const cap = node("figcaption");
     cap.append(node("h3","",name));
@@ -411,14 +462,15 @@ async function startGallery() {
       thumb.dataset.key = key;
       thumb.setAttribute("aria-haspopup","dialog");
       thumb.setAttribute("aria-label","View " + name + " in lightbox");
-      thumb.append(makeImage(original ? item.thumbnail : variant.path,item.label + " · " + name));
+      const preview = original ? (item.editSet ? item.source : item.thumbnail) : variant.path;
+      thumb.append(makeImage(preview,item.label + " · " + name));
       thumb.addEventListener("click",openViewer);
       fig.append(thumb);
       if (selected) {
         const b = node("button","primary","✓ Selected");
         b.disabled = true; cap.append(b);
       } else {
-        cap.append(action(original ? "Keep original" : "Use this version",()=>save(item,key)),
+        cap.append(action(original ? keepLabel(item) : "Use this version",()=>save(item,key)),
                    action("Use with edits",()=>openEditDialog(item,key),"text"));
       }
     } else {
@@ -439,8 +491,9 @@ async function startGallery() {
     const pos = matches.indexOf(item), top = node("div","detail-top"), status = setStatus(item);
     const prepared = outputs[item.id]?.generatedKeys?.length;
     const statusLabel = status === "pending" && prepared
-      ? prepared + " of " + treatments[item.kind].length + " generated · awaiting review" : statuses[status];
-    top.append(node("span","status " + status,kinds[item.kind] + " · " + statusLabel));
+      ? prepared + " of " + versions(item).length + " generated · awaiting review" : statuses[status];
+    const detailStatus = item.editSet ? "Edit round " + item.editSet.revision : statusLabel;
+    top.append(node("span","status " + status,kinds[item.kind] + " · " + detailStatus));
     const nav = node("div","detail-nav");
     if (pos >= 0) {
       const prev = action("←",()=>select(matches[pos-1])), next = action("→",()=>select(matches[pos+1]));
@@ -465,18 +518,31 @@ async function startGallery() {
       }
       details.append(ul); article.append(details);
     } else article.append(node("p","notes","Unlinked image"));
+    if (item.editSet) {
+      const brief = node("section","requested-edit");
+      const first = node("a","text","First-round decision");
+      first.href = "/#" + encodeURIComponent(item.editSet.id);
+      brief.append(node("h3","","Requested edit"),node("p","",item.editSet.edit),first);
+      article.append(brief);
+    }
     const bar = node("div","decision-bar"), current = decision(item);
     const label=node("span","","Decision · ");
     label.append(node("strong","",describeChoice(item,log.state(item.id))));
     bar.append(label);
+    const readyEdit = editedByParent.get(item.id);
+    if (readyEdit && currentRequest(readyEdit)) {
+      const link = node("a","text","Review edited versions A, B and C");
+      link.href = "/?view=edits#" + encodeURIComponent(readyEdit.id);
+      bar.append(link);
+    }
     if (current) bar.append(action("Clear decision",()=>save(item,null),"text"));
     article.append(bar);
     const gallery=node("div","gallery");
     gallery.append(card(item,"original"));
     if (status === "missing") {
-      gallery.append(node("div","empty","The " + treatments[item.kind].length + " planned versions will appear here as they become available."));
+      gallery.append(node("div","empty","The " + versions(item).length + " planned versions will appear here as they become available."));
     } else {
-      for (const [key] of treatments[item.kind]) gallery.append(card(item,key,reviewedVariant(item,key)));
+      for (const [key] of versions(item)) gallery.append(card(item,key,reviewedVariant(item,key)));
     }
     article.append(gallery,window.renderReviewEditor({
       item, state:log.state(item.id), labelFor:key=>labelFor(item,key), onAction:action=>writeAction(item,action)
@@ -490,23 +556,26 @@ async function startGallery() {
   }
   function render() {
     renderList(); renderDetail();
-    const count = items.filter(decision).length;
+    const count = items.filter(item => currentRequest(item) && decision(item)).length;
     byId("savedCount").textContent = count.toLocaleString() + (count === 1 ? " decision" : " decisions");
-    try { history.replaceState(null,"",active ? "#" + encodeURIComponent(active) : location.pathname); } catch {}
+    try { history.replaceState(null,"",location.pathname + location.search + (active ? "#" + encodeURIComponent(active) : "")); } catch {}
   }
   function exportDecisions() {
     log.refresh();
-    const rows=[];
-    for (const item of items) {
+    const rows=[], editedDecisions=[];
+    for (const item of allItems) {
       const saved=decision(item);
       if (!saved) continue;
       const v=saved.choice === "original" ? null : reviewedVariant(item,saved.choice);
-      rows.push({id:item.id,label:item.label,vaultPath:item.vaultPath,kind:item.kind,notes:item.notes,choice:saved.choice,mode:saved.mode,editNote:saved.editNote,
+      const section = item.editSet ? editedDecisions : rows;
+      section.push({id:item.id,...(item.editSet && {catalogItemId:item.editSet.id,sourceDecisionId:item.editSet.request,
+        editSetKey:item.editSet.key,round:item.editSet.revision,requestedEdit:item.editSet.edit,
+        startingPath:item.source,currentRequest:currentRequest(item)}),label:item.label,vaultPath:item.vaultPath,kind:item.kind,notes:item.notes,choice:saved.choice,mode:saved.mode,editNote:saved.editNote,
         selectionConflict:Boolean(saved.conflicts.length),reviewStatus:saved.reviewConflicts.length ? "conflict" : saved.reviewStatus,
         reviewComment:saved.reviewComment,requestedBy:saved.requestedBy,proposalAuthor:saved.proposalAuthor,
         sourceSha256:saved.sourceSha256,variantSha256:saved.variantSha256,updatedAt:saved.updatedAt,selectedPath:saved.conflicts.length ? null : v?.path || item.source});
     }
-    const data={schemaVersion:2,events:log.events(),exportedAt:new Date().toISOString(),inventoryCount:items.length,decisions:rows};
+    const data={schemaVersion:2,events:log.events(),exportedAt:new Date().toISOString(),inventoryCount:firstRound.length,decisions:rows,editedDecisions};
     const blob=new Blob([JSON.stringify(data,null,2) + "\n"],{type:"application/json"});
     const href=URL.createObjectURL(blob), a=node("a");
     a.href=href; a.download="taelgar-art-decisions-" + data.exportedAt.slice(0,10) + ".json";
@@ -575,11 +644,16 @@ async function startGallery() {
       storageTimer = setTimeout(()=>{log.refresh();filter({keepCurrent:true});},100);
     }
   });
+  byId(editsView ? "edited-round" : "first-round").setAttribute("aria-current","page");
+  if (editsView) {
+    byId("decision").querySelector('option[value="original"]').textContent = "Keep starting image";
+    if (!index.has(active) || !decision(index.get(active))) byId("decision").value = "open";
+  }
   initFilters();
   filter();
   document.querySelector("main").hidden = false;
   document.querySelector(".actions").hidden = false;
-  notice("");
+  notice([queueResult.error,eventsResult.error].filter(Boolean).map(error => error.message).join(" "));
 }
 startGallery().catch(error => {
   const message = document.getElementById("notice");

@@ -3,6 +3,8 @@
   const hash = /^[a-f0-9]{64}$/;
   const eventId = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,219}$/;
   const itemId = /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/;
+  const editItemId = /^edit-[a-f0-9]{64}$/;
+  const editedChoices = new Set(["original","candidate-a","candidate-b","candidate-c"]);
   const choices = new Set(["original","plain-faithful","plain-corrected","setting-faithful",
     "setting-corrected","light-faithful","light-corrected","dark-faithful","dark-corrected",
     "faithful","light-correction","full-correction"]);
@@ -33,7 +35,8 @@
       e.parents = [...new Set(raw.parents)].sort();
     }
     if (e.type === "choice") {
-      requireValue((raw.choice === null || choices.has(raw.choice)) && ["use","edits"].includes(raw.mode)
+      const validChoices = editItemId.test(e.itemId) ? editedChoices : choices;
+      requireValue((raw.choice === null || validChoices.has(raw.choice)) && ["use","edits"].includes(raw.mode)
         && string(raw.editNote) && (raw.choice !== null || raw.mode === "use")
         && (raw.choice === null || raw.choice === "original" ? raw.variantSha256 === null :
           typeof raw.variantSha256 === "string" && hash.test(raw.variantSha256)),

@@ -47,7 +47,7 @@
     const history = state.history;
     const eventById = new Map(history.map(event => [event.id,event]));
     const proposal = eventById.get(state.proposalId);
-    const choiceName = key => key === "original" ? "Original" : key ? labelFor(key) : "Undecided";
+    const choiceName = key => key ? labelFor(key) : "Undecided";
     const choiceDescription = event => choiceName(event.choice) + (event.mode === "edits" ? " · Use with edits" : "");
 
     function draftField(label, key, value, placeholder) {

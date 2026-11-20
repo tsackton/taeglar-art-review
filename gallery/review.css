@@ -52,3 +52,10 @@ body:has(#viewer[open]){overflow:hidden}
 #edit-target{color:var(--muted);overflow-wrap:anywhere}
 .card figcaption .text{display:block;margin-top:4px}
 .detail-top,.detail-nav{flex-wrap:wrap}
+
+.review-scope { display:flex; gap:3px; margin:0 0 18px; padding:3px; border:1px solid var(--line); border-radius:6px; }
+.review-scope a { flex:1; padding:6px 8px; color:var(--forest); text-align:center; text-decoration:none; font-size:13px; border-radius:4px; }
+.review-scope a[aria-current="page"] { background:var(--forest); color:white; }
+.requested-edit { margin:12px 0; padding:10px 14px; border-left:3px solid #8eaa8f; background:#e9eee5; }
+.requested-edit h3,.requested-edit p { margin:0 0 4px; }
+.requested-edit p { white-space:pre-wrap; }

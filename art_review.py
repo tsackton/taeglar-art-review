@@ -10,7 +10,8 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 from urllib.request import urlopen
 
-from review_sync import sync
+import candidate_review
+from review_sync import read_checkout, sync
 
 ROOT = Path(__file__).resolve().parent
 GALLERY = ROOT / "gallery"
@@ -77,12 +78,31 @@ class GalleryHandler(SimpleHTTPRequestHandler):
             self.send_error(403)
             return
         path = unquote(urlsplit(self.path).path)
+        if path in {"/edit-queue", "/review-events"}:
+            try:
+                value = (read_checkout(ROOT) if path == "/review-events" else
+                         candidate_review.queue(self.server.edits, self.server.source))
+            except (KeyError, TypeError, ValueError, OSError) as error:
+                self.json_response(400, {"error": str(error)})
+                return
+            self.json_response(200, value)
+            return
+        if path == "/edited.html":
+            self.send_response(302)
+            self.send_header("Location", "/?view=edits")
+            self.end_headers()
+            return
         if path == "/app":
             self.json_response(200, self.server.identity)
             return
         parts = path.removeprefix("/").split("/") if path != "/" else ["index.html"]
         if len(parts) == 1 and parts[0] in STATIC:
             target = GALLERY / parts[0]
+        elif parts[0] == "edited-images":
+            target = candidate_review.image_path(self.server.edits, path)
+            if target is None:
+                self.send_error(404)
+                return
         elif parts[0] == "data":
             parts = parts[1:]
             manifest = len(parts) == 1 and parts[0] in MANIFESTS
@@ -133,19 +153,22 @@ class GalleryServer(ThreadingHTTPServer):
     allow_reuse_address = os.name != "nt"
 
 
-def open_gallery():
+def open_gallery(page):
     if not os.environ.get("TAELGAR_REVIEW_NO_BROWSER"):
-        webbrowser.open(ORIGIN + "/")
+        webbrowser.open(ORIGIN + page)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", nargs="?", help="image source folder containing inventory.json and outputs.json")
-    source = choose_source(parser.parse_args().source)
+    parser.add_argument("--edited", action="store_true", help="open the edited candidates review")
+    options = parser.parse_args()
+    page = "/?view=edits" if options.edited else "/"
+    source = choose_source(options.source)
     for manifest in MANIFESTS:
         if not (source / manifest).is_file():
             sys.exit(f"Missing {manifest}. Choose the downloaded image-source folder.")
-    identity = {"app": "taelgar-art-review", "review": str(ROOT), "source": str(source)}
+    identity = {"app": "taelgar-art-review", "version": 2, "review": str(ROOT), "source": str(source)}
     try:
         server = GalleryServer((HOST, PORT), GalleryHandler)
     except OSError as error:
@@ -156,16 +179,19 @@ def main():
                 existing = json.load(response)
         except (OSError, ValueError):
             existing = None
+        if isinstance(existing, dict) and existing.get("app") == identity["app"] and existing.get("version") != identity["version"]:
+            sys.exit("An older Art Review gallery is running. Close its launcher window and reopen this launcher.")
         if existing != identity:
             sys.exit(f"Port {PORT} is in use. Close the running gallery or other application, then reopen this source.")
-        open_gallery()
+        open_gallery(page)
         return
     with server:
+        server.edits = source.parent / "restyle-edits"
         server.source = source
         server.identity = identity
         SAVED_SOURCE.write_text(str(source) + "\n", encoding="utf-8")
-        print(f"Image source: {source}\nArt Review: {ORIGIN}/\nKeep this window open while reviewing.", flush=True)
-        open_gallery()
+        print(f"Image source: {source}\nArt Review: {ORIGIN}{page}\nKeep this window open while reviewing.", flush=True)
+        open_gallery(page)
         try:
             server.serve_forever()
         except KeyboardInterrupt:

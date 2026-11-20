@@ -13,6 +13,8 @@ BRANCH = "main"
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,219}")
 ITEM = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}")
 FINGERPRINT = re.compile(r"[a-f0-9]{64}")
+EDIT_ITEM = re.compile(r"edit-[a-f0-9]{64}")
+EDIT_CHOICES = (None, "original", "candidate-a", "candidate-b", "candidate-c")
 CHOICES = (None, "original", "plain-faithful", "plain-corrected", "setting-faithful",
            "setting-corrected", "light-faithful", "light-corrected", "dark-faithful",
            "dark-corrected", "faithful", "light-correction", "full-correction")
@@ -72,7 +74,8 @@ def event_path(event):
             raise ValueError("Invalid review revision links.")
     if event["type"] == "choice":
         choice, mode, fingerprint = event["choice"], event["mode"], event["variantSha256"]
-        if choice not in CHOICES or mode not in ("use", "edits") or not short_text(event["editNote"]):
+        choices = EDIT_CHOICES if EDIT_ITEM.fullmatch(event["itemId"]) else CHOICES
+        if choice not in choices or mode not in ("use", "edits") or not short_text(event["editNote"]):
             raise ValueError("Invalid selection.")
         if choice is None and mode != "use":
             raise ValueError("Invalid selection mode.")
@@ -92,7 +95,22 @@ def event_path(event):
             status = event["status"]
             if status not in ("requested", "approved", "rejected") or (status == "requested") != (event["requestId"] is None):
                 raise ValueError("Invalid review status.")
-    return "reviews/" + event["itemId"] + "/" + quote(event["id"], safe="") + ".json"
+    directory = "edited-reviews" if EDIT_ITEM.fullmatch(event["itemId"]) else "reviews"
+    return directory + "/" + event["itemId"] + "/" + quote(event["id"], safe="") + ".json"
+
+
+def add_shared(events, path, event):
+    if event_path(event) != path or event["id"] in events:
+        raise ValueError("Duplicate or misplaced shared review entry: " + path)
+    events[event["id"]] = event
+
+
+def read_checkout(root):
+    events = {}
+    for directory in ("reviews", "edited-reviews"):
+        for file in sorted((root / directory).glob("*/*.json")):
+            add_shared(events, file.relative_to(root).as_posix(), json.loads(file.read_text(encoding="utf-8")))
+    return list(events.values())
 
 
 def read_remote(head):
@@ -106,12 +124,10 @@ def read_remote(head):
     with downloaded as archive:
         for info in archive.infolist():
             path = info.filename.partition("/")[2]
-            if not path.startswith("reviews/") or not path.endswith(".json"):
+            if not path.startswith(("reviews/", "edited-reviews/")) or not path.endswith(".json"):
                 continue
             event = json.loads(archive.read(info))
-            if event_path(event) != path or event["id"] in events:
-                raise ValueError("Duplicate or misplaced shared review entry: " + path)
-            events[event["id"]] = event
+            add_shared(events, path, event)
     return events
 
 
