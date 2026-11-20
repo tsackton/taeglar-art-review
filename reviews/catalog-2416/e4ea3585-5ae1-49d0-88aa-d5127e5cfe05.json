@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:28:32.227Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "remove the houses from the background",
+  "id": "e4ea3585-5ae1-49d0-88aa-d5127e5cfe05",
+  "itemId": "catalog-2416",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "4e1f70ca862a5bc6daedd8c5c19867f004609c973d51e054851f0164e14f8c6f",
+  "type": "choice",
+  "variantSha256": "8ef4e250ca8fb28437737363d9c9314b2d58a58d14930d48d4a71defb5c4155a"
+}

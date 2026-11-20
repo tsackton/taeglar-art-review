@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:34:26.336Z",
+  "author": "tim",
+  "choice": "faithful",
+  "editNote": "remove the sunlight reflecting on the water and make the sky a flatter gray with no breaks in the clouds",
+  "id": "8d5c1ecd-5383-456d-bef1-1af4ecc181d6",
+  "itemId": "catalog-439",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "ceb7268ab715971dfeb2ed3c31b6bf3c1fca145fc11daa54e64f827884a79373",
+  "type": "choice",
+  "variantSha256": "91c599c4b5a81bab367e17547aa4320b7f646060a120576cbd33f554a4c8776c"
+}
