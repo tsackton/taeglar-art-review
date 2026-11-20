@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:26:20.761Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "remove banners from background",
+  "id": "0b9f93c4-4818-4fe7-aa68-c51fdb81f513",
+  "itemId": "catalog-2755",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "6f2c4a7b86f02dd9145450bf3a3e34480e82c215b0cffbe19946788cdadb782c",
+  "type": "choice",
+  "variantSha256": "50b85a8574e6ff5370703073c02974894042e249f9ca93beeb01ce22c28f5d8d"
+}

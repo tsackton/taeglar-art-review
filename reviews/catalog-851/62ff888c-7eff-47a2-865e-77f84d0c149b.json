@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:33:00.928Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "normalize and clean up tattoos without reducing tattoo coverage. no buildings in background.",
+  "id": "62ff888c-7eff-47a2-865e-77f84d0c149b",
+  "itemId": "catalog-851",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "9bacd093ea61220984138cca0972f0dc64802da058aa1572000afd792a1512ed",
+  "type": "choice",
+  "variantSha256": "aa635518593f2f3fc49610dbca37a37467f793e36596d28cdd750f770b2b843d"
+}

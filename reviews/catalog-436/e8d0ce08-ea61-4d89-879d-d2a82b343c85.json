@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:29:26.481Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "remove buildings from background. make face a little more kenku-like using the images linked from the kenku species page. looks too much like a doll/model right now",
+  "id": "e8d0ce08-ea61-4d89-879d-d2a82b343c85",
+  "itemId": "catalog-436",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "6b0f052bacb85cce8d5d09a2bf558b110b2e00c02359792a87e96566fa783d17",
+  "type": "choice",
+  "variantSha256": "3d5451b6f4a11f6574b49a17da77e8130107909011e512dd5e1875426ad11f98"
+}

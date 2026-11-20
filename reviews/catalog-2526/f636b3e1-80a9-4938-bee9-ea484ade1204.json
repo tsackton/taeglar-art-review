@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-20T17:30:33.321Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "clear up scars and marks on face. keep eyes unnaturally bright and light purple",
+  "id": "f636b3e1-80a9-4938-bee9-ea484ade1204",
+  "itemId": "catalog-2526",
+  "mode": "edits",
+  "parents": [
+    "f461913c-e76e-48da-a644-c53d480942a6"
+  ],
+  "sourceSha256": "599d17f5113093c728f820d4f6f92ccc6bea954e621a744e3109ad8d2b1a72c3",
+  "type": "choice",
+  "variantSha256": "b79b1dedeb3c099819b3007df4d1c1ee90b9e4287ba438321a98920aca07274b"
+}

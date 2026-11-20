@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:25:10.118Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "",
+  "id": "1137d7a4-8abf-44c4-921e-fca9c8d8c8a6",
+  "itemId": "catalog-1186",
+  "mode": "use",
+  "parents": [],
+  "sourceSha256": "30cebc807ad4c26bc332eff089ec95bc05863e4ac5438adf2c8a0c00a7116be6",
+  "type": "choice",
+  "variantSha256": "e6795c53b8144f8657f54c43392edd4656d44d2d8d2996abbb0aab803d4c8a8b"
+}

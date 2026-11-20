@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:23:30.184Z",
+  "author": "tim",
+  "choice": "setting-faithful",
+  "editNote": "remove sky/castle/buildings from background. make a hint more feminine/bustier, but just a hint",
+  "id": "9be20d39-0875-4b21-890b-62787296ba25",
+  "itemId": "catalog-1829",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "9beda83a1056823c6022a135c3288cc6672ea426e8eb3c9b8dd8f2fb968533cc",
+  "type": "choice",
+  "variantSha256": "c2a35c5f86d614378d61f455bcae95698735b5556dde6b0312b9f5d1349bc74b"
+}

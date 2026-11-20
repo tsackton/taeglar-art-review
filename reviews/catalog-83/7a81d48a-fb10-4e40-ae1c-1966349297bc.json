@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-20T17:32:20.861Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "clean up cracks in skin. use stoneborn models from stoneborn creature page but don't change any features. remove torches in background",
+  "id": "7a81d48a-fb10-4e40-ae1c-1966349297bc",
+  "itemId": "catalog-83",
+  "mode": "edits",
+  "parents": [
+    "37731c2f-1b42-490c-a336-9e7ae2547e58"
+  ],
+  "sourceSha256": "ed9eb27d65789dbddd2570aaa8677e4db1e4fe0a5ad0e593c3edb3e19321e73c",
+  "type": "choice",
+  "variantSha256": "435f499fb25074056b752dd0b482b27a904b8c9b73a577c3e3d89db7f453ad76"
+}

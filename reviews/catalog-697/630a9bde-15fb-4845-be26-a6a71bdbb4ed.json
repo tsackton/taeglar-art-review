@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:28:45.014Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "remove buildings. make background just snow. clean up tattoos a little but don't reduce tattoo coverage on face",
+  "id": "630a9bde-15fb-4845-be26-a6a71bdbb4ed",
+  "itemId": "catalog-697",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "3f012b236c11e7d3b39f886f6282bfb833b2b5eedc6219e136946cbad4597a33",
+  "type": "choice",
+  "variantSha256": "e7e53b5dc71bd184faacd7bf082bf03ed74ec12d1658d63cdd3e04784d05cf93"
+}

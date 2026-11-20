@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T17:22:10.850Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "make background more of just a green blur. update image using the kenku species page as a guide",
+  "id": "8fccf890-ada8-4acc-86da-c7414de5ea36",
+  "itemId": "catalog-799",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "3c09412be18121fd5efe7ff87cfa7d063d3a8d40065cdc24b002b35f815f2807",
+  "type": "choice",
+  "variantSha256": "19c0a41edaa89a9782eff08e39a133cee788342f6a9d6a433f20a719f3bb1f7f"
+}
