@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:18:46.657Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "update clothing to be Renaissance London not modern",
+  "id": "746e5f62-3596-418a-818d-3ef325fe23fa",
+  "itemId": "catalog-1869",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "189478612120575bac864e510689ae79f46bad86adf1c8e42b4fb9ca33d19d2e",
+  "type": "choice",
+  "variantSha256": "cff0b3398e8df48f1ccb2654b9072cf327cfa353243722cf1af7d9b6f8861eb8"
+}

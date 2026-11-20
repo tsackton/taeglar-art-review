@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T13:25:59.952Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "redo to remove the obvious AI-slop scaling and make it a little more cinematic matte style, plus remove a few of the people so it doesn't look like a repetitive stamp",
+  "id": "3590e78b-761a-47e8-a18e-e2a04a660802",
+  "itemId": "catalog-1290",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "8e28459b5a5ea0ef9c023f1d0724d5e1313c1ee82ab1939ab8397a2fb861872d",
+  "type": "choice",
+  "variantSha256": "f9b7688c7c1c2bd0c69a3904be946e507bb5af003bc4f2d4b755db27c76af5e4"
+}

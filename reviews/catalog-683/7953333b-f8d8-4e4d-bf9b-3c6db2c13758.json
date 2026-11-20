@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-20T13:24:21.551Z",
+  "author": "tim",
+  "choice": "full-correction",
+  "editNote": "make face more shadowed so you can't see features",
+  "id": "7953333b-f8d8-4e4d-bf9b-3c6db2c13758",
+  "itemId": "catalog-683",
+  "mode": "edits",
+  "parents": [
+    "6b2fd6c7-c484-4efa-93e7-3fc90acfad2b"
+  ],
+  "sourceSha256": "cd020237059ddd28b891d04307ab58b49e5110272db4cc0b6272f8e59b383b9e",
+  "type": "choice",
+  "variantSha256": "0ca048d6f91909ca291fecc0038374f17ad792cb02cb373ff40bd0a63e6985f3"
+}
