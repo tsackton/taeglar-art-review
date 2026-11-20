@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:22:38.202Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "fix robotic people standing around like weird robotic stamps. make the statue a statue, right now it looks like people are climbing on it.",
+  "id": "7a106d03-8063-41d5-adb4-0f3fe0b457a8",
+  "itemId": "catalog-1833",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "b56eb507d1317499798c27df34adec78fe3a4c091a5d87f2125dbeb86e0ceadb",
+  "type": "choice",
+  "variantSha256": "03c6bc11ef9a5c75a83bc143c59acd6c5687f0ebd910025faf726b82f05949b7"
+}

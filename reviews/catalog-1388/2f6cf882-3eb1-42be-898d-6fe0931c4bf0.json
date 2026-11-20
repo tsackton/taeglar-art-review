@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:20:13.046Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "the sign and light in the back right are wildly too big for the building",
+  "id": "2f6cf882-3eb1-42be-898d-6fe0931c4bf0",
+  "itemId": "catalog-1388",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "30f30c86b1f182ec3017a484f0c02e732f493f36ade78ec75cda67bec60045c7",
+  "type": "choice",
+  "variantSha256": "564863bfe2e753e99c1465c3d2dc49ddd586b6bdf669941af47d12c02386c038"
+}

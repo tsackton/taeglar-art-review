@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:21:59.136Z",
+  "author": "tim",
+  "choice": "faithful",
+  "editNote": "fix people robotically standing around like rubber stamps added carelessly to the image",
+  "id": "e9a4c407-591b-44f5-92da-8bec6105fd9b",
+  "itemId": "catalog-3038",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "15a5e039fc0e458a172c23e9336280d25a2b34d8089a20080114a92d176cec05",
+  "type": "choice",
+  "variantSha256": "1e76dcb3228da0547178930141410e593ffca87fe82df83073dd9f83c1a8dbcd"
+}

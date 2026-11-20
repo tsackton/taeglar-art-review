@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T14:25:10.179Z",
+  "author": "tim",
+  "choice": "light-correction",
+  "editNote": "fix ship so sails and people make sense",
+  "id": "74529faa-eb49-4903-8ed0-b95f56a53831",
+  "itemId": "catalog-8",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "7cd029737153fb256b0418f42432279370c8911011b2212928de95e3c1063d8e",
+  "type": "choice",
+  "variantSha256": "184cc9b3f31ad4d3807d3099818ddd8a16969be7e6faee04b3cb64df22f0e45a"
+}
