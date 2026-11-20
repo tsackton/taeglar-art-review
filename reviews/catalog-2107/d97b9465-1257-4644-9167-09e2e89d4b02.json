@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:48:44.308Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "make background hint at a swamp, no buildings",
+  "id": "d97b9465-1257-4644-9167-09e2e89d4b02",
+  "itemId": "catalog-2107",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "10c4c1f41e49e8adaea7f0ede2ccdbf2b3bd09d7225449e540d302036a620e65",
+  "type": "choice",
+  "variantSha256": "e870f8e95cd380f81c29defe3541fc987e1e03f1aa94c2114ebf614d7bd515af"
+}

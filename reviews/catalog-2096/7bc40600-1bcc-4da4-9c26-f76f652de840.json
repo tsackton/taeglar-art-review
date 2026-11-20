@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:49:22.287Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "fix hands",
+  "id": "7bc40600-1bcc-4da4-9c26-f76f652de840",
+  "itemId": "catalog-2096",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "26dfe7a08141b2945b5f8fd6c308dac39c0e3f249738ba96a20736c65908d996",
+  "type": "choice",
+  "variantSha256": "96400ee3d662e2a1aada952ce78473711c519f89939042f4d84595027ad443eb"
+}

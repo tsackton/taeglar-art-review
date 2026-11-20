@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T16:06:14.886Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "remove banner and plant/vase in background",
+  "id": "c027ebab-72a0-47b8-b418-741cc3182e2f",
+  "itemId": "catalog-1171",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "af0859abc58ccede0e55768733c625c8ae6352e5813a1f33272932a679d53b0d",
+  "type": "choice",
+  "variantSha256": "b3f40b8a8431aa49244f7bae4ee714051f3f5bf14c98f8577f85da562a8fa98c"
+}

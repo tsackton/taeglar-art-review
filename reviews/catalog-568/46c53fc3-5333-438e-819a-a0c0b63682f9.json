@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:45:02.101Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "fix neck and face to be more of a lizardfolk. make forest into jungle",
+  "id": "46c53fc3-5333-438e-819a-a0c0b63682f9",
+  "itemId": "catalog-568",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "58bf8b9ce5438fb26a946a06a0eb73be0aaf079c864d6b03c1471f893677eb5b",
+  "type": "choice",
+  "variantSha256": "3bfc4e6efe07380f8086eb77330bedfa2c37ea58bff656eb5dd987d80d1ca546"
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:47:04.819Z",
+  "author": "tim",
+  "choice": "plain-corrected",
+  "editNote": "remove weird chain-rope on right. make background hint at ocean underwater",
+  "id": "c0fd63ab-f84a-4e1a-8e3c-68526a86d6c2",
+  "itemId": "catalog-2589",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "275906e1d9dc8c2c151ec6da897735f3f5451cd46e62ac3889ac2b0b9be682ef",
+  "type": "choice",
+  "variantSha256": "7e200fe98a8b2239801726a928487e358f48ea7ad26267bc8ce36ea9348aa165"
+}

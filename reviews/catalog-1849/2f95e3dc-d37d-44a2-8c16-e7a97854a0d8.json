@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T15:42:28.007Z",
+  "author": "tim",
+  "choice": "setting-corrected",
+  "editNote": "remove pink flower behind shoulder, make hand skin not a glove",
+  "id": "2f95e3dc-d37d-44a2-8c16-e7a97854a0d8",
+  "itemId": "catalog-1849",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "9949661c9f05ebf2b847862ad4575645c83617d2f10e0b797017389173ac2fde",
+  "type": "choice",
+  "variantSha256": "b1b7aa1c3b9891bb8cade7d2c46f27512fa292e11bcdd1b1b57dd457d4727949"
+}
