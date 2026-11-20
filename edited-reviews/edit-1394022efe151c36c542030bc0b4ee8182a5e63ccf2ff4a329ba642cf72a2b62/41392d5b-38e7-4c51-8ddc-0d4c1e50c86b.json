@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-20T21:20:24.358Z",
+  "author": "tim",
+  "choice": "candidate-c",
+  "editNote": "get rid of the little fake toy boats. add a bit more brushwork and reduce the sharpness of the buildings a little to make it seem more real",
+  "id": "41392d5b-38e7-4c51-8ddc-0d4c1e50c86b",
+  "itemId": "edit-1394022efe151c36c542030bc0b4ee8182a5e63ccf2ff4a329ba642cf72a2b62",
+  "mode": "edits",
+  "parents": [],
+  "sourceSha256": "70e5a2369c3b5b273fb132d871e311f3fa595f538b0ef1ef3c10176867c5233c",
+  "type": "choice",
+  "variantSha256": "ffbeca0a63f968b9582cc70dcfdcd2bf78fcb1f5ec213168256e9b04a6709554"
+}
