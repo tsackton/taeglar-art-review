@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-21T16:03:53.271Z",
+  "author": "tim",
+  "choice": "candidate-b",
+  "editNote": "",
+  "id": "728b9820-9721-40c6-a619-885128560a3e",
+  "itemId": "edit-bfd4c3f90d28ca51bda7e286df54c0b1c6c085594285878cd0f7a361403c7a47",
+  "mode": "use",
+  "parents": [],
+  "sourceSha256": "276f55b16d58d5edf10743b8d03ae7dac566ff96fc3248e12912e250ea18e135",
+  "type": "choice",
+  "variantSha256": "a75c05d7f6f9b44591232e23e550c85c6803e10b9b60cb40c370161bef048c1e"
+}
